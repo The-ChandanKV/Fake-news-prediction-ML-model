@@ -1,0 +1,92 @@
+/* ===== ERROR CARD STYLES ===== */
+.error-card {
+    background: rgba(245, 87, 108, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 3rem;
+    text-align: center;
+    border: 2px solid rgba(245, 87, 108, 0.3);
+    position: relative;
+    overflow: hidden;
+    animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.error-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.error-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(245, 87, 108, 0.2) 0%, rgba(254, 225, 64, 0.2) 100%);
+    animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.error-icon svg {
+    width: 40px;
+    height: 40px;
+    color: #fa709a;
+}
+
+.error-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.error-message {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.error-instructions {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.error-instructions h4 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.error-instructions ol {
+    color: var(--text-secondary);
+    line-height: 2;
+    padding-left: 1.5rem;
+    margin: 0;
+}
+
+.error-instructions li {
+    margin-bottom: 0.75rem;
+}
+
+.error-instructions code {
+    background: rgba(102, 126, 234, 0.2);
+    color: #8b9cff;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    font-family: 'Courier New', Consolas, monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1px solid rgba(102, 126, 234, 0.3);
+}
