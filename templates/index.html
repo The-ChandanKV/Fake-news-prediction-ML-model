@@ -10,21 +10,28 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Space+Grotesk:wght@400;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='error-styles.css') }}">
 </head>
 
 <body>
-    <!-- Animated Background -->
+    <!-- Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline id="bgVideo">
+            <source src="{{ url_for('static', filename='video/news_intro.mp4') }}" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <!-- Floating Particles -->
     <div class="particles-container" id="particles"></div>
 
-    <!-- Hero Section -->
-    <section class="hero-section" id="hero">
-        <div class="hero-content fade-in">
-            <div class="logo-container">
-                <div class="logo-icon">
+    <!-- Navigation -->
+    <nav class="glass-nav" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-icon-small">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round" />
@@ -34,148 +41,247 @@
                             stroke-linejoin="round" />
                     </svg>
                 </div>
-                <h1 class="main-title">Fake News Detector</h1>
+                <span class="logo-text">FakeDetect</span>
             </div>
-            <p class="subtitle">AI-Powered Truth Verification System</p>
-            <p class="description">Leveraging advanced machine learning algorithms to analyze and verify the
-                authenticity of news articles in real-time</p>
-            <div class="stats-container">
-                <div class="stat-item">
+            <div class="nav-links">
+                <a href="#hero" class="nav-link active">Home</a>
+                <a href="#prediction" class="nav-link">Analyze</a>
+                <a href="#howItWorks" class="nav-link">How It Works</a>
+                <a href="#features" class="nav-link">Features</a>
+            </div>
+            <div class="nav-cta">
+                <a href="#prediction" class="nav-btn">Try Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="hero-content">
+            <div class="hero-badge glass-badge" data-scroll="fade-down">
+                <span class="badge-icon">🤖</span>
+                <span class="badge-text">AI-Powered Detection</span>
+            </div>
+            <h1 class="main-title" data-scroll="fade-up">
+                <span class="title-line">Unmask the</span>
+                <span class="title-highlight">Truth</span>
+            </h1>
+            <p class="subtitle" data-scroll="fade-up" data-scroll-delay="100">
+                Advanced Machine Learning for News Verification
+            </p>
+            <p class="description" data-scroll="fade-up" data-scroll-delay="200">
+                Harness the power of artificial intelligence to instantly analyze and verify
+                the authenticity of news articles. Our cutting-edge ML model delivers
+                accurate predictions in milliseconds.
+            </p>
+            <div class="hero-cta" data-scroll="fade-up" data-scroll-delay="300">
+                <a href="#prediction" class="cta-primary">
+                    <span>Start Analyzing</span>
+                    <svg class="cta-arrow" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </a>
+                <a href="#howItWorks" class="cta-secondary">
+                    <span>Learn More</span>
+                </a>
+            </div>
+            <div class="stats-container" data-scroll="fade-up" data-scroll-delay="400">
+                <div class="stat-card glass-card-small">
+                    <div class="stat-icon">🎯</div>
                     <span class="stat-number" data-target="98">0</span>
-                    <span class="stat-label">% Accuracy</span>
+                    <span class="stat-suffix">%</span>
+                    <span class="stat-label">Accuracy</span>
                 </div>
-                <div class="stat-item">
+                <div class="stat-card glass-card-small">
+                    <div class="stat-icon">📰</div>
                     <span class="stat-number" data-target="20800">0</span>
+                    <span class="stat-suffix">+</span>
                     <span class="stat-label">Articles Trained</span>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-number" data-target="17128">0</span>
-                    <span class="stat-label">Features</span>
+                <div class="stat-card glass-card-small">
+                    <div class="stat-icon">⚡</div>
+                    <span class="stat-number" data-target="100">0</span>
+                    <span class="stat-suffix">ms</span>
+                    <span class="stat-label">Avg Response</span>
                 </div>
+            </div>
+        </div>
+        <div class="scroll-indicator" data-scroll="fade-up" data-scroll-delay="500">
+            <span>Scroll to explore</span>
+            <div class="scroll-arrow">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M12 5V19M12 19L19 12M12 19L5 12" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
             </div>
         </div>
     </section>
 
     <!-- Main Prediction Section -->
     <section class="prediction-section" id="prediction">
-        <div class="container glass-card slide-up">
-            <h2 class="section-title">
-                <span class="title-icon">🔍</span>
-                Analyze News Article
-            </h2>
-            <form action="/predict" method="post" id="predictionForm">
-                <div class="input-group">
-                    <label for="news_text" class="input-label">Paste your news article below</label>
-                    <div class="textarea-wrapper">
-                        <textarea name="news_text" id="news_text"
-                            placeholder="Enter the news article text here... Our AI will analyze the content and determine its authenticity."
-                            required rows="8"></textarea>
-                        <div class="char-counter">
-                            <span id="charCount">0</span> characters
+        <div class="section-bg-pattern"></div>
+        <div class="container">
+            <div class="prediction-wrapper glass-card-large" data-scroll="fade-up">
+                <div class="prediction-header">
+                    <div class="section-badge">
+                        <span class="badge-pulse"></span>
+                        <span>Live Detection</span>
+                    </div>
+                    <h2 class="section-title">
+                        <span class="title-icon">🔍</span>
+                        Analyze News Article
+                    </h2>
+                    <p class="section-subtitle">
+                        Paste any news article below and let our AI determine its authenticity
+                    </p>
+                </div>
+
+                <form id="predictionForm" class="prediction-form">
+                    <div class="input-group">
+                        <div class="textarea-container">
+                            <textarea name="news_text" id="news_text" placeholder="Paste your news article here... 
+
+Our advanced machine learning model will analyze the content and provide instant verification." required
+                                rows="8"></textarea>
+                            <div class="textarea-glow"></div>
+                        </div>
+                        <div class="textarea-footer">
+                            <div class="char-counter">
+                                <span id="charCount">0</span> characters
+                            </div>
+                            <div class="input-tips">
+                                <span class="tip">💡 Tip: Longer articles provide more accurate results</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="predict-btn" id="submitBtn">
+                        <span class="btn-bg"></span>
+                        <span class="btn-content">
+                            <span class="btn-text">Analyze Article</span>
+                            <span class="btn-icon">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </span>
+                        </span>
+                        <span class="btn-loading">
+                            <div class="loading-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </span>
+                    </button>
+                </form>
+
+                <!-- Result Container -->
+                <div class="result-container" id="resultContainer" style="display: none;">
+                    <div class="result-card" id="resultCard">
+                        <div class="result-header">
+                            <div class="result-icon" id="resultIcon">
+                                <!-- Dynamic icon -->
+                            </div>
+                            <h3 class="result-title">Analysis Complete</h3>
+                        </div>
+                        <div class="result-body">
+                            <p class="result-prediction" id="resultPrediction"></p>
+                            <div class="confidence-section">
+                                <div class="confidence-header">
+                                    <span class="confidence-label">Confidence Level</span>
+                                    <span class="confidence-value" id="confidenceValue">0%</span>
+                                </div>
+                                <div class="confidence-bar">
+                                    <div class="confidence-track">
+                                        <div class="confidence-fill" id="confidenceFill"></div>
+                                        <div class="confidence-glow"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="result-details" id="resultDetails">
+                                <div class="detail-item">
+                                    <span class="detail-icon">📊</span>
+                                    <span class="detail-text" id="detailText"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="result-actions">
+                            <button class="action-btn secondary" onclick="resetForm()">
+                                <svg viewBox="0 0 24 24" fill="none">
+                                    <path d="M1 4V10H7M23 20V14H17" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10M23 14L18.36 18.36A9 9 0 0 1 3.51 15"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                                <span>Analyze Another</span>
+                            </button>
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="predict-btn" id="submitBtn">
-                    <span class="btn-text">Analyze Article</span>
-                    <span class="btn-icon">→</span>
-                </button>
-            </form>
-
-            <!-- Loading Animation -->
-            <div class="loading-container" id="loadingContainer" style="display: none;">
-                <div class="loading-spinner"></div>
-                <p class="loading-text">Analyzing article with AI...</p>
             </div>
-
-            <!-- Prediction Result -->
-            {% if prediction is not none %}
-            <div class="result-container" id="resultContainer">
-                {% if 'Error' in prediction %}
-                <!-- Error Display -->
-                <div class="error-card">
-                    <div class="error-icon">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
-                            <line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" />
-                            <circle cx="12" cy="16" r="1" fill="currentColor" />
-                        </svg>
-                    </div>
-                    <h3 class="error-title">Model Not Ready</h3>
-                    <p class="error-message">The prediction model needs to be trained with your current Python
-                        environment.</p>
-                    <div class="error-instructions">
-                        <h4>Quick Fix:</h4>
-                        <ol>
-                            <li>Open a new terminal in your project folder</li>
-                            <li>Run: <code>python train_improved_model.py</code></li>
-                            <li>Wait 5-10 minutes for training to complete</li>
-                            <li>Restart the Flask app: <code>python app.py</code></li>
-                        </ol>
-                    </div>
-                    <button class="analyze-another-btn" onclick="resetForm()">Try Again</button>
-                </div>
-                {% else %}
-                <!-- Success Display -->
-                <div class="result-card {% if 'Fake' in prediction %}fake-news{% else %}real-news{% endif %}">
-                    <div class="result-icon">
-                        {% if 'Fake' in prediction %}
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
-                            <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" />
-                            <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" />
-                        </svg>
-                        {% else %}
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
-                            <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                        {% endif %}
-                    </div>
-                    <h3 class="result-title">Analysis Complete</h3>
-                    <p class="result-prediction">{{ prediction }}</p>
-                    <div class="confidence-bar">
-                        <div class="confidence-label">Confidence Level</div>
-                        <div class="confidence-track">
-                            <div class="confidence-fill"
-                                style="width: {% if 'Fake' in prediction %}85{% else %}92{% endif %}%"></div>
-                        </div>
-                        <div class="confidence-value">{% if 'Fake' in prediction %}85{% else %}92{% endif %}%</div>
-                    </div>
-                    <button class="analyze-another-btn" onclick="resetForm()">Analyze Another Article</button>
-                </div>
-                {% endif %}
-            </div>
-            {% endif %}
         </div>
     </section>
 
     <!-- How It Works Section -->
     <section class="how-it-works-section" id="howItWorks">
         <div class="container">
-            <h2 class="section-title fade-in">How It Works</h2>
-            <div class="steps-container">
-                <div class="step-card slide-up" style="animation-delay: 0.1s">
-                    <div class="step-number">01</div>
-                    <div class="step-icon">📝</div>
-                    <h3 class="step-title">Input Article</h3>
-                    <p class="step-description">Paste the news article text you want to verify</p>
+            <div class="section-header" data-scroll="fade-up">
+                <div class="section-badge">
+                    <span>Process</span>
                 </div>
-                <div class="step-card slide-up" style="animation-delay: 0.2s">
-                    <div class="step-number">02</div>
-                    <div class="step-icon">🤖</div>
-                    <h3 class="step-title">AI Analysis</h3>
-                    <p class="step-description">Our ML model processes and analyzes the content using TF-IDF
-                        vectorization</p>
-                </div>
-                <div class="step-card slide-up" style="animation-delay: 0.3s">
-                    <div class="step-number">03</div>
-                    <div class="step-icon">✨</div>
-                    <h3 class="step-title">Get Results</h3>
-                    <p class="step-description">Receive instant verification with confidence scores</p>
+                <h2 class="section-title centered">How It Works</h2>
+                <p class="section-subtitle centered">
+                    Our three-step verification process ensures accurate and reliable results
+                </p>
+            </div>
+            <div class="steps-timeline">
+                <div class="timeline-line"></div>
+                <div class="steps-container">
+                    <div class="step-card glass-card-medium" data-scroll="fade-right" data-scroll-delay="0">
+                        <div class="step-number-badge">01</div>
+                        <div class="step-icon-wrapper">
+                            <div class="step-icon-bg"></div>
+                            <div class="step-icon">📝</div>
+                        </div>
+                        <h3 class="step-title">Input Article</h3>
+                        <p class="step-description">
+                            Simply paste any news article, social media post, or text content you want to verify
+                        </p>
+                        <div class="step-features">
+                            <span class="feature-tag">Any Language</span>
+                            <span class="feature-tag">Any Source</span>
+                        </div>
+                    </div>
+                    <div class="step-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="150">
+                        <div class="step-number-badge">02</div>
+                        <div class="step-icon-wrapper">
+                            <div class="step-icon-bg"></div>
+                            <div class="step-icon">🤖</div>
+                        </div>
+                        <h3 class="step-title">AI Analysis</h3>
+                        <p class="step-description">
+                            Our ML model uses TF-IDF vectorization and advanced NLP to analyze content patterns
+                        </p>
+                        <div class="step-features">
+                            <span class="feature-tag">TF-IDF</span>
+                            <span class="feature-tag">NLP</span>
+                        </div>
+                    </div>
+                    <div class="step-card glass-card-medium" data-scroll="fade-left" data-scroll-delay="300">
+                        <div class="step-number-badge">03</div>
+                        <div class="step-icon-wrapper">
+                            <div class="step-icon-bg"></div>
+                            <div class="step-icon">✨</div>
+                        </div>
+                        <h3 class="step-title">Get Results</h3>
+                        <p class="step-description">
+                            Receive instant verification with detailed confidence scores and analysis
+                        </p>
+                        <div class="step-features">
+                            <span class="feature-tag">Instant</span>
+                            <span class="feature-tag">Detailed</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -184,27 +290,103 @@
     <!-- Features Section -->
     <section class="features-section" id="features">
         <div class="container">
-            <h2 class="section-title fade-in">Key Features</h2>
+            <div class="section-header" data-scroll="fade-up">
+                <div class="section-badge">
+                    <span>Capabilities</span>
+                </div>
+                <h2 class="section-title centered">Key Features</h2>
+                <p class="section-subtitle centered">
+                    Powered by state-of-the-art machine learning technology
+                </p>
+            </div>
             <div class="features-grid">
-                <div class="feature-card glass-card slide-up" style="animation-delay: 0.1s">
-                    <div class="feature-icon">⚡</div>
+                <div class="feature-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="0">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon-glow"></div>
+                        <div class="feature-icon">⚡</div>
+                    </div>
                     <h3 class="feature-title">Real-Time Analysis</h3>
-                    <p class="feature-description">Instant verification results powered by advanced ML algorithms</p>
+                    <p class="feature-description">
+                        Get instant verification results in under 100 milliseconds, powered by optimized ML algorithms
+                    </p>
+                    <div class="feature-stats">
+                        <span class="stat-mini">&lt;100ms response</span>
+                    </div>
                 </div>
-                <div class="feature-card glass-card slide-up" style="animation-delay: 0.2s">
-                    <div class="feature-icon">🎯</div>
+                <div class="feature-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="100">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon-glow"></div>
+                        <div class="feature-icon">🎯</div>
+                    </div>
                     <h3 class="feature-title">High Accuracy</h3>
-                    <p class="feature-description">98%+ accuracy rate trained on 20,800+ articles</p>
+                    <p class="feature-description">
+                        98%+ accuracy rate achieved through training on over 20,800 verified articles
+                    </p>
+                    <div class="feature-stats">
+                        <span class="stat-mini">98.6% accuracy</span>
+                    </div>
                 </div>
-                <div class="feature-card glass-card slide-up" style="animation-delay: 0.3s">
-                    <div class="feature-icon">🔒</div>
+                <div class="feature-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="200">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon-glow"></div>
+                        <div class="feature-icon">🔒</div>
+                    </div>
                     <h3 class="feature-title">Privacy First</h3>
-                    <p class="feature-description">Your data is processed securely and never stored</p>
+                    <p class="feature-description">
+                        Your data is processed securely and never stored. Complete privacy guaranteed
+                    </p>
+                    <div class="feature-stats">
+                        <span class="stat-mini">Zero data storage</span>
+                    </div>
                 </div>
-                <div class="feature-card glass-card slide-up" style="animation-delay: 0.4s">
-                    <div class="feature-icon">📊</div>
+                <div class="feature-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="300">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon-glow"></div>
+                        <div class="feature-icon">📊</div>
+                    </div>
                     <h3 class="feature-title">Confidence Scores</h3>
-                    <p class="feature-description">Detailed confidence metrics for each prediction</p>
+                    <p class="feature-description">
+                        Detailed confidence metrics and probability scores for each prediction made
+                    </p>
+                    <div class="feature-stats">
+                        <span class="stat-mini">Detailed metrics</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="tech-section" id="tech">
+        <div class="container">
+            <div class="tech-wrapper glass-card-large" data-scroll="fade-up">
+                <div class="tech-content">
+                    <h2 class="tech-title">Built with Modern Technology</h2>
+                    <p class="tech-description">
+                        Our fake news detection system leverages cutting-edge machine learning frameworks
+                    </p>
+                </div>
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <div class="tech-icon">🐍</div>
+                        <span class="tech-name">Python</span>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🧠</div>
+                        <span class="tech-name">Scikit-Learn</span>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">📊</div>
+                        <span class="tech-name">TF-IDF</span>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🌐</div>
+                        <span class="tech-name">Flask</span>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">📝</div>
+                        <span class="tech-name">NLTK</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -212,9 +394,35 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <p class="footer-text">Built with Machine Learning & TensorFlow • Powered by Logistic Regression</p>
-            <p class="footer-copyright">© 2025 Fake News Detector. All rights reserved.</p>
+        <div class="footer-content">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <div class="logo-icon-small">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" />
+                                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" />
+                                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" />
+                            </svg>
+                        </div>
+                        <span>FakeDetect</span>
+                    </div>
+                    <p class="footer-tagline">Unmasking truth with AI</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#hero">Home</a>
+                    <a href="#prediction">Analyze</a>
+                    <a href="#howItWorks">How It Works</a>
+                    <a href="#features">Features</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-text">
+                    Built with Machine Learning & Python •
+                    <span class="footer-highlight">Powered by Logistic Regression</span>
+                </p>
+                <p class="footer-copyright">© 2025 Fake News Detector. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 

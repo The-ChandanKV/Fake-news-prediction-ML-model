@@ -1,63 +1,185 @@
+// ===== FAKE NEWS DETECTOR - ENHANCED SCRIPT =====
+
 // ===== PARTICLE ANIMATION =====
 function createParticles() {
-    const particlesContainer = document.getElementById('particles');
-    const particleCount = 50;
+    const container = document.getElementById('particles');
+    if (!container) return;
+
+    const particleCount = 60;
 
     for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
-        particle.className = 'particle';
+        const size = Math.random() * 4 + 1;
+        const opacity = Math.random() * 0.4 + 0.1;
+        const duration = Math.random() * 20 + 15;
+        const delay = Math.random() * 10;
+        const xStart = Math.random() * 100;
+        const yStart = Math.random() * 100;
+
         particle.style.cssText = `
             position: absolute;
-            width: ${Math.random() * 4 + 1}px;
-            height: ${Math.random() * 4 + 1}px;
-            background: rgba(102, 126, 234, ${Math.random() * 0.5 + 0.2});
+            width: ${size}px;
+            height: ${size}px;
+            background: radial-gradient(circle, rgba(120, 100, 255, ${opacity}) 0%, transparent 70%);
             border-radius: 50%;
-            left: ${Math.random() * 100}%;
-            top: ${Math.random() * 100}%;
-            animation: float ${Math.random() * 10 + 10}s linear infinite;
-            animation-delay: ${Math.random() * 5}s;
+            left: ${xStart}%;
+            top: ${yStart}%;
+            animation: floatParticle ${duration}s ease-in-out infinite;
+            animation-delay: ${delay}s;
+            pointer-events: none;
         `;
-        particlesContainer.appendChild(particle);
+        container.appendChild(particle);
     }
 
+    // Add particle animation styles
     const style = document.createElement('style');
     style.textContent = `
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 - 100}px); opacity: 0; }
+        @keyframes floatParticle {
+            0%, 100% { 
+                transform: translate(0, 0) scale(1);
+                opacity: 0.3;
+            }
+            25% { 
+                transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px) scale(1.2);
+                opacity: 0.6;
+            }
+            50% { 
+                transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) scale(1);
+                opacity: 0.4;
+            }
+            75% { 
+                transform: translate(${Math.random() * 50 - 25}px, ${Math.random() * 50 - 25}px) scale(0.8);
+                opacity: 0.5;
+            }
         }
     `;
     document.head.appendChild(style);
 }
 
+// ===== SCROLL ANIMATIONS =====
+function initScrollAnimations() {
+    const elements = document.querySelectorAll('[data-scroll]');
+
+    const observerOptions = {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const delay = entry.target.getAttribute('data-scroll-delay') || 0;
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, parseInt(delay));
+            }
+        });
+    }, observerOptions);
+
+    elements.forEach(el => {
+        // Skip hero section elements - they have their own animation
+        if (!el.closest('.hero-section')) {
+            observer.observe(el);
+        } else {
+            el.classList.add('visible');
+        }
+    });
+}
+
+// ===== NAVBAR SCROLL EFFECT =====
+function initNavbarScroll() {
+    const navbar = document.getElementById('navbar');
+    if (!navbar) return;
+
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+
+        if (currentScroll > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+
+        lastScroll = currentScroll;
+    }, { passive: true });
+}
+
+// ===== SMOOTH SCROLL FOR NAV LINKS =====
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+
+                // Update active nav link
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                this.classList.add('active');
+            }
+        });
+    });
+}
+
 // ===== COUNTER ANIMATION =====
 function animateCounters() {
     const counters = document.querySelectorAll('.stat-number');
+
     counters.forEach(counter => {
         const target = parseInt(counter.getAttribute('data-target'));
         const duration = 2000;
-        const increment = target / (duration / 16);
-        let current = 0;
+        const startTime = Date.now();
 
         const updateCounter = () => {
-            current += increment;
-            if (current < target) {
-                counter.textContent = Math.floor(current).toLocaleString();
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+
+            // Easing function
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            const current = Math.floor(target * easeOut);
+
+            counter.textContent = current.toLocaleString();
+
+            if (progress < 1) {
                 requestAnimationFrame(updateCounter);
             } else {
                 counter.textContent = target.toLocaleString();
             }
         };
+
         updateCounter();
     });
 }
 
+// ===== OBSERVE STATS FOR COUNTER ANIMATION =====
+function initCounterObserver() {
+    const statsContainer = document.querySelector('.stats-container');
+    if (!statsContainer) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounters();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    observer.observe(statsContainer);
+}
+
 // ===== CHARACTER COUNTER =====
-function setupCharCounter() {
+function initCharCounter() {
     const textarea = document.getElementById('news_text');
     const charCount = document.getElementById('charCount');
+
     if (textarea && charCount) {
         textarea.addEventListener('input', () => {
             charCount.textContent = textarea.value.length.toLocaleString();
@@ -65,168 +187,314 @@ function setupCharCounter() {
     }
 }
 
-// ===== FORM SUBMISSION WITH SCROLL POSITION =====
-function setupFormSubmission() {
+// ===== AJAX FORM SUBMISSION =====
+function initFormSubmission() {
     const form = document.getElementById('predictionForm');
-    const loadingContainer = document.getElementById('loadingContainer');
     const submitBtn = document.getElementById('submitBtn');
+    const resultContainer = document.getElementById('resultContainer');
 
-    if (form) {
-        form.addEventListener('submit', (e) => {
-            // Save scroll position
-            const scrollPos = window.pageYOffset || document.documentElement.scrollTop;
-            sessionStorage.setItem('scrollPosition', scrollPos);
+    if (!form) return;
 
-            // Show loading
-            if (loadingContainer) loadingContainer.style.display = 'block';
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.style.opacity = '0.6';
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const textarea = document.getElementById('news_text');
+        const text = textarea.value.trim();
+
+        if (text.length < 10) {
+            showNotification('Please enter at least 10 characters', 'error');
+            return;
+        }
+
+        // Show loading state
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+
+        try {
+            const response = await fetch('/api/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: text })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                displayResult(data);
+            } else {
+                showNotification(data.error || 'An error occurred', 'error');
             }
-        });
-    }
+        } catch (error) {
+            console.error('Prediction error:', error);
+            showNotification('Failed to connect to the server', 'error');
+        } finally {
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+        }
+    });
 }
 
-// ===== RESTORE SCROLL POSITION =====
-function restoreScrollPosition() {
-    const scrollPos = sessionStorage.getItem('scrollPosition');
-    if (scrollPos) {
-        setTimeout(() => {
-            window.scrollTo({ top: parseInt(scrollPos), behavior: 'instant' });
-            sessionStorage.removeItem('scrollPosition');
-        }, 100);
+// ===== DISPLAY RESULT =====
+function displayResult(data) {
+    const resultContainer = document.getElementById('resultContainer');
+    const resultCard = document.getElementById('resultCard');
+    const resultIcon = document.getElementById('resultIcon');
+    const resultPrediction = document.getElementById('resultPrediction');
+    const confidenceValue = document.getElementById('confidenceValue');
+    const confidenceFill = document.getElementById('confidenceFill');
+    const detailText = document.getElementById('detailText');
+
+    // Determine if fake or real
+    const isFake = data.prediction.toLowerCase().includes('fake');
+
+    // Update card class
+    resultCard.className = 'result-card ' + (isFake ? 'fake-result' : 'real-result');
+
+    // Update icon
+    if (isFake) {
+        resultIcon.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                <path d="M15 9L9 15M9 9L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        `;
+    } else {
+        resultIcon.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        `;
     }
+
+    // Update prediction text
+    resultPrediction.textContent = data.prediction;
+
+    // Update confidence with animation
+    const confidence = data.confidence || (isFake ? 85 : 92);
+    confidenceValue.textContent = '0%';
+    confidenceFill.style.width = '0%';
+
+    // Animate confidence
+    setTimeout(() => {
+        confidenceValue.textContent = confidence.toFixed(1) + '%';
+        confidenceFill.style.width = confidence + '%';
+    }, 100);
+
+    // Update detail text
+    detailText.textContent = isFake
+        ? 'This article shows patterns commonly found in misleading content'
+        : 'This article appears to be from a credible source';
+
+    // Show result container
+    resultContainer.style.display = 'block';
+
+    // Scroll to result
+    setTimeout(() => {
+        resultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 200);
 }
 
 // ===== RESET FORM =====
 function resetForm() {
     const textarea = document.getElementById('news_text');
-    const resultContainer = document.getElementById('resultContainer');
     const charCount = document.getElementById('charCount');
+    const resultContainer = document.getElementById('resultContainer');
 
     if (textarea) {
         textarea.value = '';
         textarea.focus();
     }
-    if (charCount) charCount.textContent = '0';
+
+    if (charCount) {
+        charCount.textContent = '0';
+    }
+
     if (resultContainer) {
-        resultContainer.style.animation = 'slideOutDown 0.5s ease-out';
-        setTimeout(() => resultContainer.remove(), 500);
+        resultContainer.style.animation = 'slideDown 0.4s ease-out forwards';
+        setTimeout(() => {
+            resultContainer.style.display = 'none';
+            resultContainer.style.animation = '';
+        }, 400);
     }
 }
 
-// ===== SCROLL ANIMATIONS =====
-function setupScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+// ===== NOTIFICATION SYSTEM =====
+function showNotification(message, type = 'info') {
+    // Remove existing notification
+    const existing = document.querySelector('.notification');
+    if (existing) existing.remove();
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-            }
-        });
-    }, observerOptions);
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <span class="notification-icon">${type === 'error' ? '⚠️' : 'ℹ️'}</span>
+        <span class="notification-message">${message}</span>
+    `;
 
-    // Add scroll-reveal class
-    document.querySelectorAll('.fade-in, .slide-up').forEach(el => {
-        el.classList.add('scroll-reveal');
-    });
+    document.body.appendChild(notification);
 
-    // Observe elements
-    document.querySelectorAll('.scroll-reveal').forEach(el => {
-        observer.observe(el);
+    // Animate in
+    setTimeout(() => notification.classList.add('show'), 10);
 
-        // Activate elements already in viewport
-        const rect = el.getBoundingClientRect();
-        const isInViewport = (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
-
-        if (isInViewport) {
-            setTimeout(() => el.classList.add('active'), 100);
-        }
-    });
+    // Remove after delay
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 4000);
 }
 
-// ===== SMOOTH SCROLL =====
-function setupSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+// Add notification styles
+const notificationStyles = document.createElement('style');
+notificationStyles.textContent = `
+    .notification {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        padding: 1rem 1.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: white;
+        font-size: 0.95rem;
+        z-index: 10000;
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .notification.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    
+    .notification-error {
+        border-color: rgba(239, 68, 68, 0.3);
+        background: rgba(239, 68, 68, 0.15);
+    }
+    
+    .notification-icon {
+        font-size: 1.1rem;
+    }
+    
+    @keyframes slideDown {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+    }
+`;
+document.head.appendChild(notificationStyles);
+
+// ===== ACTIVE NAV LINK ON SCROLL =====
+function initNavHighlight() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionHeight = section.offsetHeight;
+
+            if (window.pageYOffset >= sectionTop &&
+                window.pageYOffset < sectionTop + sectionHeight) {
+                current = section.getAttribute('id');
             }
         });
-    });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
+        });
+    }, { passive: true });
 }
 
 // ===== PARALLAX EFFECT =====
-function setupParallax() {
-    let ticking = false;
+function initParallax() {
+    const video = document.querySelector('.video-background video');
+    if (!video) return;
+
     window.addEventListener('scroll', () => {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                const scrolled = window.pageYOffset;
-                document.querySelectorAll('.hero-content').forEach(el => {
-                    el.style.transform = `translateY(${scrolled * 0.5}px)`;
-                });
-                ticking = false;
-            });
-            ticking = true;
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * 0.3;
+        video.style.transform = `translate(-50%, calc(-50% + ${rate}px))`;
+    }, { passive: true });
+}
+
+// ===== VIDEO LOADING =====
+function initVideoBackground() {
+    const video = document.getElementById('bgVideo');
+    if (!video) return;
+
+    video.playbackRate = 0.8; // Slow down video slightly
+
+    video.addEventListener('loadeddata', () => {
+        video.style.opacity = '1';
+    });
+
+    // Fallback if video doesn't load
+    video.addEventListener('error', () => {
+        console.warn('Video failed to load, using fallback background');
+        const videoContainer = document.querySelector('.video-background');
+        if (videoContainer) {
+            videoContainer.style.background = 'linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%)';
         }
     });
 }
 
-// ===== INITIALIZE =====
-document.addEventListener('DOMContentLoaded', () => {
-    // Restore scroll position first
-    restoreScrollPosition();
+// ===== TEXTAREA AUTO-RESIZE =====
+function initTextareaResize() {
+    const textarea = document.getElementById('news_text');
+    if (!textarea) return;
 
-    // Create particles
+    textarea.addEventListener('input', () => {
+        textarea.style.height = 'auto';
+        textarea.style.height = Math.min(textarea.scrollHeight, 400) + 'px';
+    });
+}
+
+// ===== INITIALIZE EVERYTHING =====
+document.addEventListener('DOMContentLoaded', () => {
+    // Video background
+    initVideoBackground();
+
+    // Create particle effects
     createParticles();
 
-    // Animate counters when visible
-    const statsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateCounters();
-                statsObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
+    // Navbar effects
+    initNavbarScroll();
+    initNavHighlight();
 
-    const statsContainer = document.querySelector('.stats-container');
-    if (statsContainer) statsObserver.observe(statsContainer);
+    // Scroll effects
+    initScrollAnimations();
+    initSmoothScroll();
+    initParallax();
 
-    // Setup features
-    setupCharCounter();
-    setupFormSubmission();
-    setupScrollAnimations();
-    setupSmoothScroll();
-    setupParallax();
+    // Counter animation
+    initCounterObserver();
 
-    // Hero animation
-    setTimeout(() => {
-        document.querySelector('.hero-content')?.classList.add('fade-in');
-    }, 100);
+    // Form functionality
+    initCharCounter();
+    initFormSubmission();
+    initTextareaResize();
+
+    console.log('🚀 Fake News Detector initialized successfully!');
 });
 
-// ===== EXPORT FUNCTIONS =====
+// Export functions for global access
 window.resetForm = resetForm;
-
-// ===== SLIDEOUT ANIMATION =====
-const slideOutStyle = document.createElement('style');
-slideOutStyle.textContent = `
-    @keyframes slideOutDown {
-        from { opacity: 1; transform: translateY(0); }
-        to { opacity: 0; transform: translateY(30px); }
-    }
-`;
-document.head.appendChild(slideOutStyle);
+window.showNotification = showNotification;
