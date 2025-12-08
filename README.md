@@ -3,8 +3,7 @@
 <!-- Animated Header -->
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=200&section=header&text=Fake%20News%20Detector&fontSize=50&fontColor=fff&animation=twinkling&fontAlignY=35&desc=AI-Powered%20Truth%20Verification%20System&descAlignY=55&descSize=18" width="100%"/>
 
-<!-- Animated Typing Effect -->
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3000&pause=1000&color=6366F1&center=true&vCenter=true&multiline=true&repeat=true&width=600&height=100&lines=🔍+Unmask+the+Truth+with+AI;🤖+Machine+Learning+Powered+Detection;⚡+Real-time+News+Verification;🎯+98%25+Accuracy+Rate" alt="Typing SVG" /></a>
+
 
 <!-- Badges Row 1 -->
 <p>
@@ -19,7 +18,7 @@
   <img src="https://img.shields.io/badge/Accuracy-98.6%25-00C853?style=for-the-badge" alt="Accuracy"/>
   <img src="https://img.shields.io/badge/Articles%20Trained-20,800+-6366F1?style=for-the-badge" alt="Articles"/>
   <img src="https://img.shields.io/badge/Response%20Time-<100ms-FF6B6B?style=for-the-badge" alt="Response Time"/>
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="License"/>
+
 </p>
 
 <!-- Social Badges -->
@@ -80,7 +79,7 @@
 | [📊 Model Performance](#-model-performance) | Accuracy metrics and benchmarks |
 | [🛠️ Tech Stack](#️-tech-stack) | Technologies used |
 | [🤝 Contributing](#-contributing) | Contribution guidelines |
-| [📄 License](#-license) | License information |
+ 
 
 </details>
 
@@ -739,31 +738,7 @@ git push origin feature/amazing-feature
 
 ---
 
-## 📄 License
 
-<div align="center">
-
-This project is licensed under the **MIT License**
-
-```
-MIT License
-
-Copyright (c) 2025 Fake News Detector
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software...
-```
-
-<a href="LICENSE">
-  <img src="https://img.shields.io/badge/Read_Full_License-MIT-yellow?style=for-the-badge" alt="License"/>
-</a>
-
-</div>
-
----
 
 ## 💖 Support
 
@@ -771,13 +746,13 @@ copies of the Software...
 
 If you found this project helpful, please consider:
 
-<a href="https://github.com/yourusername/fake-news-detector/stargazers">
+<a href="https://github.com/The-ChandanKV/fake-news-detector/stargazers">
   <img src="https://img.shields.io/badge/⭐_Star_This_Repo-6366F1?style=for-the-badge" alt="Star"/>
 </a>
-<a href="https://github.com/yourusername/fake-news-detector/fork">
+<a href="https://github.com/The-ChandanKV/fake-news-detector/fork">
   <img src="https://img.shields.io/badge/🍴_Fork_This_Repo-00C853?style=for-the-badge" alt="Fork"/>
 </a>
-<a href="https://github.com/yourusername/fake-news-detector/issues">
+<a href="https://github.com/The-ChandanKV/fake-news-detector/issues">
   <img src="https://img.shields.io/badge/🐛_Report_Bug-FF6B6B?style=for-the-badge" alt="Bug"/>
 </a>
 
@@ -819,13 +794,11 @@ If you found this project helpful, please consider:
 ### 📬 Contact
 
 <p>
-<a href="mailto:your.email@example.com">
+<a href="mailto:thechandankv@gmail.com">
   <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/>
 </a>
-<a href="https://linkedin.com/in/yourprofile">
-  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
 </a>
-<a href="https://github.com/yourusername">
+<a href="https://github.com/The-Chandan-KV">
   <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
 </a>
 </p>
@@ -835,7 +808,7 @@ If you found this project helpful, please consider:
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=100&section=footer" width="100%"/>
 
 <p>
-Made with ❤️ and 🤖 by <b>Your Name</b>
+Made with ❤️  by <b>Chandan K V</b>
 </p>
 
 <p>
