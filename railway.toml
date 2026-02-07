@@ -1,0 +1,5 @@
+[env]
+NLTK_DATA = "/app/nltk_data"
+
+[build]
+build = "python -c \"import nltk; nltk.download('stopwords', download_dir='/app/nltk_data')\""

@@ -13,7 +13,7 @@ try:
 except LookupError:
     nltk.download('stopwords')
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../templates', static_folder='../static')
 
 # Initialize Porter Stemmer
 port_stem = PorterStemmer()
@@ -27,12 +27,13 @@ def load_model():
     """Load the model and vectorizer"""
     global model, vectorizer, model_loaded
     try:
-        model_path = 'model/fake_news_model.pkl'
-        vectorizer_path = 'model/tfidf_vectorizer.pkl'
+        # Get the directory where this file is located
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        model_path = os.path.join(base_dir, 'model', 'fake_news_model.pkl')
+        vectorizer_path = os.path.join(base_dir, 'model', 'tfidf_vectorizer.pkl')
         
         if not os.path.exists(model_path) or not os.path.exists(vectorizer_path):
             print("✗ Model files not found!")
-            print("  Please run: python train_improved_model.py")
             return False
             
         model = pickle.load(open(model_path, 'rb'))
@@ -42,8 +43,6 @@ def load_model():
         return True
     except Exception as e:
         print(f"✗ Error loading model: {e}")
-        print("  The model may need to be retrained with your current Python environment.")
-        print("  Run: python train_improved_model.py")
         model_loaded = False
         return False
 
@@ -85,7 +84,7 @@ def predict():
             # Check if model is loaded
             if not model_loaded:
                 return render_template("index.html", 
-                                     prediction="Error: Model not loaded. Please retrain the model by running: python train_improved_model.py",
+                                     prediction="Error: Model not loaded. Please retrain the model.",
                                      model_status=False)
             
             # Get the news text from form
@@ -114,7 +113,6 @@ def predict():
                 confidence = 85  # Default confidence if predict_proba not available
             
             # Convert 0/1 prediction to meaningful text
-            # Note: Based on the notebook, 0 = Fake, 1 = Real
             if prediction == 1:
                 result_text = f"Real News"
             else:
@@ -181,19 +179,5 @@ def health():
         "model_loaded": model_loaded
     })
 
-if __name__ == '__main__':
-    print("\n" + "=" * 60)
-    print("FAKE NEWS DETECTION SYSTEM")
-    print("=" * 60)
-    if model_loaded:
-        print("✓ Model Status: READY")
-        print("✓ Server starting...")
-    else:
-        print("✗ Model Status: NOT LOADED")
-        print("  To train the model, run: python train_improved_model.py")
-        print("  The app will still start but predictions won't work.")
-    print("=" * 60 + "\n")
-    
-    # Use PORT env variable for Railway, default to 5000 for local dev
-    port = int(os.environ.get('PORT', 5000))
-    app.run(debug=False, host='0.0.0.0', port=port)
+# Vercel requires the app to be exposed
+handler = app
