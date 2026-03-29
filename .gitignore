@@ -6,3 +6,6 @@ venv/
 .idea/
 *.pkl
 !model/*.pkl
+
+# ignore large word bindings file
+ML Dataset/glove.6B.100d.txt

@@ -78,7 +78,7 @@ try:
     prediction = model.predict(vectorized)[0]
     
     print(f"✓ Prediction successful!")
-    print(f"  Result: {'Real News' if prediction == 1 else 'Fake News'}")
+    print(f"  Result: {'Real News' if prediction == 0 else 'Fake News'}")
     
     # Try to get confidence
     try:

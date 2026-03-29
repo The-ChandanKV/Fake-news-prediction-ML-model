@@ -27,11 +27,35 @@ print("=" * 60)
 print("IMPROVED FAKE NEWS DETECTION MODEL TRAINING")
 print("=" * 60)
 
-# Load dataset
-print("\n[1/7] Loading dataset...")
+# Load datasets
+print("\n[1/7] Loading datasets...")
 try:
+    # Load original dataset
     news_dataset = pd.read_csv('train.csv')
-    print(f"✓ Dataset loaded: {news_dataset.shape[0]} articles")
+    print(f"✓ Original dataset loaded: {news_dataset.shape[0]} articles")
+    
+    # Load new uploaded dataset
+    new_dataset = pd.read_csv('ML Dataset/news_articles.csv')
+    print(f"✓ New custom dataset loaded: {new_dataset.shape[0]} articles")
+    
+    # Preprocess new dataset to match original format
+    # Original format has: id, title, author, text, label
+    # New dataset has: author, published, title, text, language, site_url, main_img_url, type, label, etc.
+    new_dataset = new_dataset[['title', 'author', 'label']]
+    new_dataset = new_dataset.dropna(subset=['label'])
+    
+    # Map 'Real' to 0 and 'Fake' to 1
+    new_dataset['label'] = new_dataset['label'].map({'Real': 0, 'Fake': 1})
+    new_dataset = new_dataset.dropna(subset=['label'])
+    new_dataset['label'] = new_dataset['label'].astype(int)
+    
+    # Concatenate both datasets
+    news_dataset = pd.concat([news_dataset, new_dataset], ignore_index=True)
+    print(f"✓ Combined dataset size: {news_dataset.shape[0]} articles")
+    
+    # Shuffle the dataset
+    news_dataset = news_dataset.sample(frac=1, random_state=42).reset_index(drop=True)
+    
 except Exception as e:
     print(f"✗ Error loading dataset: {e}")
     exit(1)
@@ -41,7 +65,7 @@ print("\n[2/7] Preprocessing data...")
 news_dataset = news_dataset.fillna('')
 
 # Merge author and title for better context
-news_dataset['content'] = news_dataset['author'] + ' ' + news_dataset['title']
+news_dataset['content'] = news_dataset['author'].astype(str) + ' ' + news_dataset['title'].astype(str)
 
 # Text preprocessing function
 port_stem = PorterStemmer()

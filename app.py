@@ -114,8 +114,8 @@ def predict():
                 confidence = 85  # Default confidence if predict_proba not available
             
             # Convert 0/1 prediction to meaningful text
-            # Note: Based on the notebook, 0 = Fake, 1 = Real
-            if prediction == 1:
+            # Note: In the dataset, 0 = Real (Reliable), 1 = Fake (Unreliable)
+            if prediction == 0:
                 result_text = f"Real News"
             else:
                 result_text = f"Fake News"
@@ -163,7 +163,7 @@ def api_predict():
             confidence = 85
         
         result = {
-            "prediction": "Real News" if prediction == 1 else "Fake News",
+            "prediction": "Real News" if prediction == 0 else "Fake News",
             "confidence": round(confidence, 2),
             "label": int(prediction)
         }
