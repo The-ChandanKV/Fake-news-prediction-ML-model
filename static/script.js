@@ -248,6 +248,18 @@ function displayResult(data) {
 
     // Determine if fake or real
     const isFake = data.prediction.toLowerCase().includes('fake');
+    
+    // Save state globally for feedback
+    window.currentPrediction = {
+        text: document.getElementById('news_text').value.trim(),
+        label: data.label
+    };
+    
+    // Reset feedback UI state continuously when rendering a new result
+    const feedbackButtons = document.getElementById('feedbackButtons');
+    const feedbackThanks = document.getElementById('feedbackThanks');
+    if(feedbackButtons) feedbackButtons.style.display = 'flex';
+    if(feedbackThanks) feedbackThanks.style.display = 'none';
 
     // Update card class
     resultCard.className = 'result-card ' + (isFake ? 'fake-result' : 'real-result');
@@ -318,6 +330,55 @@ function resetForm() {
             resultContainer.style.display = 'none';
             resultContainer.style.animation = '';
         }, 400);
+    }
+}
+
+// ===== SUBMIT FEEDBACK =====
+async function submitFeedback(isCorrect) {
+    if (!window.currentPrediction) return;
+    
+    const feedbackButtons = document.getElementById('feedbackButtons');
+    const feedbackThanks = document.getElementById('feedbackThanks');
+    
+    // Hide buttons, show loading or thanks
+    if (feedbackButtons) feedbackButtons.style.display = 'none';
+    if (feedbackThanks) {
+        feedbackThanks.style.display = 'block';
+        feedbackThanks.textContent = 'Submitting feedback...';
+    }
+    
+    try {
+        const response = await fetch('/api/feedback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                text: window.currentPrediction.text,
+                label: window.currentPrediction.label,
+                correct: isCorrect
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            if (feedbackThanks) {
+                feedbackThanks.innerHTML = '✨ Thank you! The model will learn from your feedback during its next training cycle.';
+            }
+            showNotification('Feedback saved! Your input makes the AI smarter.', 'info');
+            window.currentPrediction = null; // Clear to prevent double feedback
+        } else {
+            throw new Error(data.error || 'Failed to save feedback');
+        }
+    } catch (error) {
+        console.error('Feedback error:', error);
+        
+        // Revert UI on failure
+        if (feedbackButtons) feedbackButtons.style.display = 'flex';
+        if (feedbackThanks) feedbackThanks.style.display = 'none';
+        
+        showNotification('An error occurred while saving your feedback.', 'error');
     }
 }
 
@@ -467,6 +528,77 @@ function initTextareaResize() {
     });
 }
 
+// ===== FETCH LATEST NEWS =====
+async function fetchLatestNews() {
+    const btn = document.getElementById('fetchNewsBtn');
+    const resultText = document.getElementById('fetchResult');
+    
+    if (!btn) return;
+    
+    btn.classList.add('loading');
+    btn.disabled = true;
+    if (resultText) resultText.textContent = '';
+
+    try {
+        const response = await fetch('/api/fetch-news', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            if (resultText) {
+                resultText.style.color = '#4ade80';
+                resultText.textContent = `✓ ${data.new_articles} new articles added! Total: ${data.total_articles}`;
+            }
+            showNotification(`Fetched ${data.new_articles} new articles from live sources!`, 'info');
+            loadFetchStatus(); // Refresh the stats
+        } else {
+            throw new Error(data.error || 'Failed to fetch news');
+        }
+    } catch (error) {
+        console.error('Fetch news error:', error);
+        if (resultText) {
+            resultText.style.color = '#f87171';
+            resultText.textContent = '✗ ' + error.message;
+        }
+        showNotification('Failed to fetch news: ' + error.message, 'error');
+    } finally {
+        btn.classList.remove('loading');
+        btn.disabled = false;
+    }
+}
+
+// ===== LOAD FETCH STATUS =====
+async function loadFetchStatus() {
+    try {
+        const response = await fetch('/api/fetch-status');
+        if (!response.ok) return;
+
+        const data = await response.json();
+
+        const fetchedEl = document.getElementById('fetchedCount');
+        const feedbackEl = document.getElementById('feedbackCount');
+        const lastFetchEl = document.getElementById('lastFetchTime');
+
+        if (fetchedEl) fetchedEl.textContent = data.total_fetched || 0;
+        if (feedbackEl) feedbackEl.textContent = data.total_feedback || 0;
+        if (lastFetchEl) {
+            if (data.last_fetch) {
+                const d = new Date(data.last_fetch);
+                lastFetchEl.textContent = d.toLocaleDateString('en-US', {
+                    month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                });
+            } else {
+                lastFetchEl.textContent = 'Never';
+            }
+        }
+    } catch (error) {
+        console.log('Could not load fetch status:', error);
+    }
+}
+
 // ===== INITIALIZE EVERYTHING =====
 document.addEventListener('DOMContentLoaded', () => {
     // Video background
@@ -492,9 +624,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initFormSubmission();
     initTextareaResize();
 
+    // Load live update status
+    loadFetchStatus();
+
     console.log('🚀 Fake News Detector initialized successfully!');
 });
 
 // Export functions for global access
 window.resetForm = resetForm;
 window.showNotification = showNotification;
+window.submitFeedback = submitFeedback;
+window.fetchLatestNews = fetchLatestNews;

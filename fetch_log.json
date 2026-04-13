@@ -1,0 +1,21 @@
+{
+  "fetches": [
+    {
+      "timestamp": "2026-04-13T21:48:10.925666",
+      "new_articles": 10,
+      "total_articles": 10
+    },
+    {
+      "timestamp": "2026-04-13T21:48:46.422916",
+      "new_articles": 0,
+      "total_articles": 10
+    },
+    {
+      "timestamp": "2026-04-13T21:57:55.387621",
+      "new_articles": 0,
+      "total_articles": 10
+    }
+  ],
+  "last_fetch": "2026-04-13T21:57:55.387621",
+  "total_fetched_articles": 10
+}

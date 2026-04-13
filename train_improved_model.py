@@ -16,6 +16,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 import pickle
 import nltk
+import os
 
 # Download required NLTK data
 try:
@@ -59,6 +60,37 @@ try:
 except Exception as e:
     print(f"✗ Error loading dataset: {e}")
     exit(1)
+
+# Check for user feedback data
+if os.path.exists('user_feedback.csv'):
+    try:
+        print("\n[✓] Found user feedback data! Incorporating into training...")
+        feedback_dataset = pd.read_csv('user_feedback.csv')
+        feedback_dataset = feedback_dataset[['title', 'author', 'label']]
+        feedback_dataset = feedback_dataset.dropna(subset=['label'])
+        feedback_dataset['label'] = feedback_dataset['label'].astype(int)
+        
+        # Concatenate feedback with the main dataset
+        news_dataset = pd.concat([news_dataset, feedback_dataset], ignore_index=True)
+        print(f"✓ Added {feedback_dataset.shape[0]} user feedback articles.")
+        print(f"✓ New combined dataset size: {news_dataset.shape[0]} articles.")
+    except Exception as e:
+        print(f"✗ Error loading user feedback: {e}")
+
+# Check for dynamically fetched real-world news
+if os.path.exists('fetched_news.csv'):
+    try:
+        print("\n[✓] Found fetched real-world news! Incorporating into training...")
+        fetched_dataset = pd.read_csv('fetched_news.csv')
+        fetched_dataset = fetched_dataset[['title', 'author', 'label']]
+        fetched_dataset = fetched_dataset.dropna(subset=['label'])
+        fetched_dataset['label'] = fetched_dataset['label'].astype(int)
+        
+        news_dataset = pd.concat([news_dataset, fetched_dataset], ignore_index=True)
+        print(f"✓ Added {fetched_dataset.shape[0]} real-world news articles.")
+        print(f"✓ New combined dataset size: {news_dataset.shape[0]} articles.")
+    except Exception as e:
+        print(f"✗ Error loading fetched news: {e}")
 
 # Handle missing values
 print("\n[2/7] Preprocessing data...")

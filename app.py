@@ -6,6 +6,12 @@ from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 import nltk
 import os
+import sys
+
+# Fix Unicode output on Windows terminals
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8')
+    sys.stderr.reconfigure(encoding='utf-8')
 
 # Download stopwords if not already downloaded
 try:
@@ -170,6 +176,90 @@ def api_predict():
         
         return jsonify(result)
         
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/api/feedback", methods=["POST"])
+def api_feedback():
+    """API endpoint to receive user feedback on predictions"""
+    try:
+        data = request.get_json()
+        news_text = data.get("text", "")
+        predicted_label = data.get("label", -1)
+        is_correct = data.get("correct", True)
+        
+        if not news_text or predicted_label == -1:
+            return jsonify({"error": "Invalid data"}), 400
+            
+        # Invert label if prediction was wrong
+        actual_label = predicted_label if is_correct else (1 - predicted_label)
+        
+        # Save to CSV
+        file_path = 'user_feedback.csv'
+        file_exists = os.path.isfile(file_path)
+        
+        import csv
+        with open(file_path, mode='a', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            if not file_exists:
+                # Add headers compatible with train_improved_model.py
+                writer.writerow(['title', 'author', 'label'])
+            
+            # Save the text in the 'title' column since train_improved_model.py uses author+title
+            writer.writerow([news_text, 'User Feedback', actual_label])
+            
+        return jsonify({"success": True, "message": "Feedback saved for the next training cycle!"})
+        
+    except Exception as e:
+        print(f"Error saving feedback: {e}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/api/fetch-news", methods=["POST"])
+def api_fetch_news():
+    """API endpoint to fetch latest real-world news for retraining"""
+    try:
+        from fetch_news import fetch_all_news
+        result = fetch_all_news()
+        return jsonify({
+            "success": True,
+            "new_articles": result["new_articles"],
+            "total_articles": result["total_articles"],
+            "message": f"Fetched {result['new_articles']} new articles! Total: {result['total_articles']}"
+        })
+    except Exception as e:
+        print(f"Error fetching news: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/api/fetch-status")
+def api_fetch_status():
+    """Get status of fetched news data"""
+    try:
+        import json
+        status = {
+            "total_fetched": 0,
+            "total_feedback": 0,
+            "last_fetch": None
+        }
+        
+        # Check fetched news
+        if os.path.isfile('fetched_news.csv'):
+            with open('fetched_news.csv', 'r', encoding='utf-8') as f:
+                status["total_fetched"] = max(0, sum(1 for _ in f) - 1)
+        
+        # Check user feedback
+        if os.path.isfile('user_feedback.csv'):
+            with open('user_feedback.csv', 'r', encoding='utf-8') as f:
+                status["total_feedback"] = max(0, sum(1 for _ in f) - 1)
+        
+        # Check fetch log
+        if os.path.isfile('fetch_log.json'):
+            with open('fetch_log.json', 'r') as f:
+                log = json.load(f)
+                status["last_fetch"] = log.get("last_fetch")
+        
+        return jsonify(status)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

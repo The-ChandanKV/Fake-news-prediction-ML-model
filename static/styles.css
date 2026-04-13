@@ -523,6 +523,7 @@ body {
 .prediction-section,
 .how-it-works-section,
 .features-section,
+.live-update-section,
 .tech-section {
     padding: var(--section-padding) 0;
     position: relative;
@@ -1601,4 +1602,79 @@ body {
 
 .hero-section .scroll-indicator {
     animation-delay: 0.6s;
+}
+
+/* ===== LIVE NEWS UPDATE SECTION ===== */
+.live-update-section {
+    background: radial-gradient(ellipse at 50% 0%, rgba(120, 100, 255, 0.06) 0%, transparent 60%);
+}
+
+.live-update-grid {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.update-stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.update-stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    min-width: 160px;
+    flex: 1;
+    max-width: 220px;
+}
+
+.update-stat-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.fetch-panel {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.fetch-panel-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.fetch-info {
+    flex: 1;
+}
+
+.fetch-action {
+    text-align: center;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .fetch-panel-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .update-stats-row {
+        gap: 1rem;
+    }
+
+    .update-stat-card {
+        min-width: 100px;
+        padding: 1rem 1.25rem;
+    }
 }
