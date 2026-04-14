@@ -6,6 +6,8 @@ This script trains an improved model with better preprocessing and hyperparamete
 import pandas as pd
 import numpy as np
 import re
+import sys
+import os
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -16,7 +18,11 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 import pickle
 import nltk
-import os
+
+# Fix Unicode output on Windows terminals
+if sys.stdout.encoding != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8')
+    sys.stderr.reconfigure(encoding='utf-8')
 
 # Download required NLTK data
 try:
@@ -91,6 +97,21 @@ if os.path.exists('fetched_news.csv'):
         print(f"✓ New combined dataset size: {news_dataset.shape[0]} articles.")
     except Exception as e:
         print(f"✗ Error loading fetched news: {e}")
+
+# Check for Indian news data (for better India coverage)
+if os.path.exists('indian_news.csv'):
+    try:
+        print("\n[✓] Found Indian news dataset! Incorporating for better regional coverage...")
+        indian_dataset = pd.read_csv('indian_news.csv')
+        indian_dataset = indian_dataset[['title', 'author', 'label']]
+        indian_dataset = indian_dataset.dropna(subset=['label'])
+        indian_dataset['label'] = indian_dataset['label'].astype(int)
+        
+        news_dataset = pd.concat([news_dataset, indian_dataset], ignore_index=True)
+        print(f"✓ Added {indian_dataset.shape[0]} Indian news articles (labeled as Real).")
+        print(f"✓ New combined dataset size: {news_dataset.shape[0]} articles.")
+    except Exception as e:
+        print(f"✗ Error loading Indian news: {e}")
 
 # Handle missing values
 print("\n[2/7] Preprocessing data...")

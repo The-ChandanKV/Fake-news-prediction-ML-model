@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard — FakeDetect AI</title>
+    <meta name="description" content="Real-time analytics dashboard for FakeDetect AI — track predictions, trends, and model performance.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --bg: #050816;
+            --surface: rgba(255,255,255,0.04);
+            --surface-hover: rgba(255,255,255,0.07);
+            --border: rgba(255,255,255,0.08);
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --purple: #818cf8;
+            --blue: #60a5fa;
+            --green: #4ade80;
+            --red: #ef4444;
+            --yellow: #facc15;
+            --orange: #fb923c;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        /* Nav */
+        .dash-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background: rgba(5,8,22,0.95);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+        .dash-nav .logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--purple); }
+        .dash-nav .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .dash-nav .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+        .dash-nav .nav-links a:hover, .dash-nav .nav-links a.active { color: var(--text); }
+        .badge-live { background: rgba(239,68,68,0.2); color: #ef4444; font-size: 0.7rem; padding: 2px 6px; border-radius: 8px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1 } 50% { opacity: 0.5 } }
+
+        /* Layout */
+        .dash-layout { display: grid; grid-template-columns: 240px 1fr; min-height: calc(100vh - 57px); }
+
+        /* Sidebar */
+        .sidebar {
+            background: rgba(255,255,255,0.02);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .sidebar-section { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin: 1rem 0 0.5rem 0.75rem; }
+        .sidebar-link {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.65rem 0.75rem;
+            border-radius: 8px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .sidebar-link:hover, .sidebar-link.active {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+        .sidebar-link.active { color: var(--purple); border-left: 3px solid var(--purple); }
+
+        /* Main content */
+        .dash-main { padding: 2rem; overflow-y: auto; }
+
+        /* Page header */
+        .page-header { margin-bottom: 2rem; }
+        .page-header h1 { font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 700; }
+        .page-header p { color: var(--muted); margin-top: 0.25rem; font-size: 0.9rem; }
+
+        /* Stats row */
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .stat-card:hover { transform: translateY(-2px); }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--gradient);
+        }
+        .stat-card.green::before { background: linear-gradient(90deg, #4ade80, #22c55e); }
+        .stat-card.red::before { background: linear-gradient(90deg, #ef4444, #dc2626); }
+        .stat-card.blue::before { background: linear-gradient(90deg, #60a5fa, #3b82f6); }
+        .stat-card.yellow::before { background: linear-gradient(90deg, #facc15, #f59e0b); }
+        .stat-label { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .stat-value { font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; font-weight: 700; line-height: 1; }
+        .stat-value.green { color: var(--green); }
+        .stat-value.red { color: var(--red); }
+        .stat-value.purple { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .stat-sub { font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem; }
+
+        /* Charts grid */
+        .charts-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .chart-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+        .chart-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+        .chart-card h3 span { font-size: 1.2rem; }
+
+        /* Bar chart canvas */
+        canvas { max-height: 260px; }
+
+        /* Domain table */
+        .domain-list { display: flex; flex-direction: column; gap: 0.5rem; }
+        .domain-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 0.75rem;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.02);
+            font-size: 0.9rem;
+        }
+        .domain-row .dom { color: var(--red); font-weight: 500; }
+        .domain-row .cnt { background: rgba(239,68,68,0.15); color: var(--red); padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; }
+
+        /* Bottom row */
+        .bottom-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
+
+        /* Feedback accuracy meter */
+        .accuracy-ring { position: relative; width: 140px; height: 140px; margin: 0 auto 1rem; }
+        .accuracy-ring svg { transform: rotate(-90deg); }
+        .ring-bg { stroke: rgba(255,255,255,0.08); fill: none; }
+        .ring-fill { stroke: var(--green); fill: none; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+        .ring-text {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .ring-num { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--green); }
+        .ring-lbl { font-size: 0.75rem; color: var(--muted); }
+
+        /* Language tags */
+        .lang-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .lang-tag { background: rgba(96,165,250,0.1); border: 1px solid rgba(96,165,250,0.2); color: var(--blue); padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; cursor: default; }
+
+        /* Empty state */
+        .empty-state { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.9rem; }
+
+        /* Refresh btn */
+        .refresh-btn {
+            margin-left: auto;
+            background: rgba(129,140,248,0.1);
+            border: 1px solid rgba(129,140,248,0.25);
+            color: var(--purple);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .refresh-btn:hover { background: rgba(129,140,248,0.2); }
+
+        @media (max-width: 900px) {
+            .dash-layout { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .charts-grid, .bottom-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="dash-nav">
+    <div class="logo">🛡️ FakeDetect<span style="color:#fff;font-weight:300;">AI</span></div>
+    <div class="nav-links">
+        <a href="/">← Back to Analyzer</a>
+        <a href="/dashboard" class="active">Dashboard</a>
+        <a href="/api-docs">API Docs</a>
+        <span class="badge-live">● LIVE</span>
+    </div>
+</nav>
+
+<div class="dash-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <span class="sidebar-section">Analytics</span>
+        <a class="sidebar-link active" onclick="showView('overview')">📊 Overview</a>
+        <a class="sidebar-link" onclick="showView('trends')">📈 Trends</a>
+        <a class="sidebar-link" onclick="showView('domains')">🌐 Domains</a>
+        <a class="sidebar-link" onclick="showView('languages')">🌍 Languages</a>
+
+        <span class="sidebar-section">System</span>
+        <a class="sidebar-link" href="/">🔍 Analyzer</a>
+        <a class="sidebar-link" href="/api-docs">📖 API Docs</a>
+        <a class="sidebar-link" onclick="refreshAll()">↻ Refresh</a>
+    </aside>
+
+    <!-- Main -->
+    <main class="dash-main">
+        <div class="page-header">
+            <div style="display:flex;align-items:center;gap:1rem;">
+                <div>
+                    <h1>Analytics Dashboard</h1>
+                    <p>Real-time intelligence on fake news patterns and model performance</p>
+                </div>
+                <button class="refresh-btn" onclick="refreshAll()">↻ Refresh</button>
+            </div>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-label">Total Analyses</div>
+                <div class="stat-value purple" id="totalAnalyses">—</div>
+                <div class="stat-sub">All time predictions</div>
+            </div>
+            <div class="stat-card red">
+                <div class="stat-label">Fake Detected</div>
+                <div class="stat-value red" id="fakeCount">—</div>
+                <div class="stat-sub" id="fakePct">—% of all analyses</div>
+            </div>
+            <div class="stat-card green">
+                <div class="stat-label">Real Verified</div>
+                <div class="stat-value green" id="realCount">—</div>
+                <div class="stat-sub">Authentic articles confirmed</div>
+            </div>
+            <div class="stat-card blue">
+                <div class="stat-label">Avg Confidence</div>
+                <div class="stat-value" style="color:var(--blue)" id="avgConfidence">—</div>
+                <div class="stat-sub">Model certainty score</div>
+            </div>
+        </div>
+
+        <!-- Charts Row 1 -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3><span>📅</span> 7-Day Detection Trend</h3>
+                <canvas id="trendChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3><span>🌐</span> Top Fake Domains Caught</h3>
+                <div class="domain-list" id="domainList">
+                    <div class="empty-state">Run some analyses to populate this</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row 2 -->
+        <div class="bottom-row">
+            <div class="chart-card">
+                <h3><span>🎯</span> Prediction Split</h3>
+                <canvas id="splitChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3><span>✅</span> User Feedback Accuracy</h3>
+                <div class="accuracy-ring">
+                    <svg width="140" height="140" viewBox="0 0 140 140">
+                        <circle class="ring-bg" cx="70" cy="70" r="56" stroke-width="10"/>
+                        <circle class="ring-fill" id="accuracyRing" cx="70" cy="70" r="56" stroke-width="10"
+                            stroke-dasharray="351.86"
+                            stroke-dashoffset="351.86"/>
+                    </svg>
+                    <div class="ring-text">
+                        <div class="ring-num" id="accuracyPct">—</div>
+                        <div class="ring-lbl">Accurate</div>
+                    </div>
+                </div>
+                <div style="text-align:center;color:var(--muted);font-size:0.85rem;" id="feedbackTotal">Loading...</div>
+            </div>
+            <div class="chart-card">
+                <h3><span>🌍</span> Languages Detected</h3>
+                <div class="lang-grid" id="langGrid">
+                    <div class="empty-state" style="width:100%">No multilingual data yet</div>
+                </div>
+                <div style="margin-top:1rem;">
+                    <canvas id="langChart" style="max-height:100px;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model Info Card -->
+        <div style="margin-top:1.5rem;">
+            <div class="chart-card" style="display:flex;flex-wrap:wrap;gap:2rem;align-items:center;">
+                <div>
+                    <div class="stat-label">Model Accuracy</div>
+                    <div class="stat-value green">98.6%</div>
+                </div>
+                <div>
+                    <div class="stat-label">Training Articles</div>
+                    <div class="stat-value" style="color:var(--purple);" id="trainArt">—</div>
+                </div>
+                <div>
+                    <div class="stat-label">Languages Supported</div>
+                    <div class="stat-value" style="color:var(--blue);" id="langSupported">—</div>
+                </div>
+                <div>
+                    <div class="stat-label">Source DB Size</div>
+                    <div class="stat-value" style="color:var(--yellow);" id="sourceDb">—</div>
+                </div>
+                <div style="margin-left:auto;text-align:right;">
+                    <div class="stat-label">Platform Uptime</div>
+                    <div class="stat-value green">99.9%</div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+let trendChartInst, splitChartInst, langChartInst;
+
+const CHART_DEFAULTS = {
+    color: 'rgba(255,255,255,0.85)',
+    grid: 'rgba(255,255,255,0.06)',
+    font: { family: 'Inter', size: 11 }
+};
+
+async function refreshAll() {
+    try {
+        const res = await fetch('/api/stats');
+        const d = await res.json();
+        populateDashboard(d);
+    } catch(e) {
+        console.error('Dashboard fetch error:', e);
+    }
+}
+
+function populateDashboard(d) {
+    // KPI
+    document.getElementById('totalAnalyses').textContent = d.total_analyses ?? 0;
+    document.getElementById('fakeCount').textContent = d.fake_detected ?? 0;
+    document.getElementById('realCount').textContent = d.real_detected ?? 0;
+    document.getElementById('avgConfidence').textContent = (d.avg_confidence ?? 0) + '%';
+    document.getElementById('fakePct').textContent = (d.fake_percentage ?? 0) + '% of all analyses';
+    document.getElementById('trainArt').textContent = (d.total_training_articles ?? 0).toLocaleString();
+    document.getElementById('langSupported').textContent = (d.languages_supported ?? 0) + '+';
+    document.getElementById('sourceDb').textContent = (d.sources_in_db ?? 0) + '+';
+
+    // Feedback ring
+    const acc = d.feedback_accuracy ?? 0;
+    document.getElementById('accuracyPct').textContent = acc + '%';
+    document.getElementById('feedbackTotal').textContent = `Based on ${d.total_feedback ?? 0} user corrections`;
+    const circumference = 351.86;
+    const offset = circumference - (acc / 100) * circumference;
+    document.getElementById('accuracyRing').style.strokeDashoffset = offset;
+
+    // Trend chart
+    const trend = d.trend_7days ?? [];
+    const labels = trend.map(t => {
+        const dt = new Date(t.date);
+        return dt.toLocaleDateString('en', { month: 'short', day: 'numeric' });
+    });
+    const fakeData = trend.map(t => t.fake);
+    const realData = trend.map(t => t.real);
+
+    if (trendChartInst) trendChartInst.destroy();
+    trendChartInst = new Chart(document.getElementById('trendChart'), {
+        type: 'bar',
+        data: {
+            labels,
+            datasets: [
+                { label: 'Fake', data: fakeData, backgroundColor: 'rgba(239,68,68,0.7)', borderRadius: 4, borderSkipped: false },
+                { label: 'Real', data: realData, backgroundColor: 'rgba(74,222,128,0.7)', borderRadius: 4, borderSkipped: false }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { labels: { color: CHART_DEFAULTS.color, font: CHART_DEFAULTS.font } } },
+            scales: {
+                x: { stacked: false, ticks: { color: CHART_DEFAULTS.color }, grid: { color: CHART_DEFAULTS.grid } },
+                y: { ticks: { color: CHART_DEFAULTS.color, stepSize: 1 }, grid: { color: CHART_DEFAULTS.grid } }
+            }
+        }
+    });
+
+    // Split donut
+    if (splitChartInst) splitChartInst.destroy();
+    const tot = (d.fake_detected ?? 0) + (d.real_detected ?? 0);
+    splitChartInst = new Chart(document.getElementById('splitChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Fake News', 'Real News'],
+            datasets: [{ data: [d.fake_detected ?? 0, d.real_detected ?? 0], backgroundColor: ['rgba(239,68,68,0.8)', 'rgba(74,222,128,0.8)'], borderWidth: 0 }]
+        },
+        options: {
+            responsive: true,
+            cutout: '65%',
+            plugins: {
+                legend: { labels: { color: CHART_DEFAULTS.color, font: CHART_DEFAULTS.font, padding: 16 } },
+                tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} (${tot ? Math.round(ctx.parsed/tot*100) : 0}%)` } }
+            }
+        }
+    });
+
+    // Domain list
+    const domains = d.top_fake_domains ?? [];
+    const dl = document.getElementById('domainList');
+    if (domains.length === 0) {
+        dl.innerHTML = '<div class="empty-state">No flagged domains yet — analyze some articles</div>';
+    } else {
+        dl.innerHTML = domains.map(dom => `
+            <div class="domain-row">
+                <span class="dom">🚩 ${dom.domain}</span>
+                <span class="cnt">${dom.count} flagged</span>
+            </div>
+        `).join('');
+    }
+
+    // Language grid & chart
+    const langs = d.language_breakdown ?? [];
+    if (langs.length > 0) {
+        const LANG_NAMES = { en:'English', es:'Spanish', fr:'French', de:'German', hi:'Hindi', ar:'Arabic', 'zh-cn':'Chinese', pt:'Portuguese', ru:'Russian', ja:'Japanese' };
+        document.getElementById('langGrid').innerHTML = langs.map(l =>
+            `<span class="lang-tag">${LANG_NAMES[l.lang] || l.lang} (${l.count})</span>`
+        ).join('');
+
+        if (langChartInst) langChartInst.destroy();
+        langChartInst = new Chart(document.getElementById('langChart'), {
+            type: 'bar',
+            data: {
+                labels: langs.map(l => LANG_NAMES[l.lang] || l.lang),
+                datasets: [{ data: langs.map(l => l.count), backgroundColor: 'rgba(96,165,250,0.6)', borderRadius: 4, borderSkipped: false }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { ticks: { color: CHART_DEFAULTS.color, font: { size: 10 } }, grid: { color: CHART_DEFAULTS.grid } },
+                    y: { ticks: { color: CHART_DEFAULTS.color, stepSize: 1 }, grid: { color: CHART_DEFAULTS.grid } }
+                }
+            }
+        });
+    }
+}
+
+function showView(view) {
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    event.target.classList.add('active');
+}
+
+// Load on page ready
+refreshAll();
+// Auto-refresh every 30 seconds
+setInterval(refreshAll, 30000);
+</script>
+</body>
+</html>

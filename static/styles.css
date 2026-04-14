@@ -952,6 +952,26 @@ body {
     color: hsl(160, 80%, 45%);
 }
 
+/* ── Uncertain / Low-confidence state ── */
+.result-card.uncertain-result::before {
+    background: linear-gradient(90deg, #f59e0b, #d97706);
+}
+
+.uncertain-result .result-icon {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(251, 191, 36, 0.15));
+}
+
+.uncertain-result .result-icon svg {
+    color: #f59e0b;
+}
+
+.uncertain-result .result-prediction {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
 .result-title {
     font-size: 1.25rem;
     font-weight: 600;
@@ -1676,5 +1696,175 @@ body {
     .update-stat-card {
         min-width: 100px;
         padding: 1rem 1.25rem;
+    }
+}
+
+/* ===== 7-LAYER PIPELINE GRID ===== */
+.pipeline-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+}
+
+.pipeline-card {
+    padding: 1.75rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.pipeline-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-primary);
+    opacity: 0;
+    transition: var(--transition-normal);
+}
+
+.pipeline-card:hover::before {
+    opacity: 1;
+}
+
+.pipeline-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0.15;
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+}
+
+.pipeline-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.pipeline-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.pipeline-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* ===== SOCIAL IMPACT SECTION ===== */
+.impact-section {
+    padding: var(--section-padding) 0;
+    position: relative;
+    background: radial-gradient(ellipse at 50% 50%, rgba(129, 140, 248, 0.04) 0%, transparent 60%);
+}
+
+.impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.impact-card {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    position: relative;
+}
+
+.impact-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 2px;
+    background: var(--gradient-primary);
+    border-radius: 2px;
+    opacity: 0;
+    transition: var(--transition-normal);
+}
+
+.impact-card:hover::after {
+    opacity: 1;
+    width: 60%;
+}
+
+.impact-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.impact-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.25rem;
+}
+
+.impact-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* ===== ANALYSIS CARDS ===== */
+.analysis-card {
+    border-radius: var(--radius-md) !important;
+    margin-top: 0.75rem;
+    transition: var(--transition-normal);
+}
+
+.analysis-card:hover {
+    background: rgba(255, 255, 255, 0.04) !important;
+}
+
+/* ===== DETAIL ITEMS ENHANCED ===== */
+.result-details .detail-item {
+    margin-top: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    transition: var(--transition-normal);
+}
+
+.result-details .detail-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* ===== RESPONSIVE: PIPELINE ===== */
+@media (max-width: 768px) {
+    .pipeline-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .impact-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .pipeline-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .impact-grid {
+        grid-template-columns: 1fr;
     }
 }

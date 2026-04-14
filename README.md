@@ -1,9 +1,7 @@
 <div align="center">
 
 <!-- Animated Header -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=200&section=header&text=Fake%20News%20Detector&fontSize=50&fontColor=fff&animation=twinkling&fontAlignY=35&desc=AI-Powered%20Truth%20Verification%20System&descAlignY=55&descSize=18" width="100%"/>
-
-
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=200&section=header&text=FakeDetect%20AI&fontSize=50&fontColor=fff&animation=twinkling&fontAlignY=35&desc=Intelligent%20News%20Verification%20Platform&descAlignY=55&descSize=18" width="100%"/>
 
 <!-- Badges Row 1 -->
 <p>
@@ -11,26 +9,26 @@
   <img src="https://img.shields.io/badge/Flask-2.0+-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask"/>
   <img src="https://img.shields.io/badge/Scikit--Learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white" alt="Scikit-learn"/>
   <img src="https://img.shields.io/badge/NLTK-154f3c?style=for-the-badge&logo=python&logoColor=white" alt="NLTK"/>
+  <img src="https://img.shields.io/badge/NLP-6366F1?style=for-the-badge&logo=spacy&logoColor=white" alt="NLP"/>
 </p>
 
 <!-- Badges Row 2 -->
 <p>
   <img src="https://img.shields.io/badge/Accuracy-98.6%25-00C853?style=for-the-badge" alt="Accuracy"/>
-  <img src="https://img.shields.io/badge/Articles%20Trained-20,800+-6366F1?style=for-the-badge" alt="Articles"/>
-  <img src="https://img.shields.io/badge/Response%20Time-<100ms-FF6B6B?style=for-the-badge" alt="Response Time"/>
-
+  <img src="https://img.shields.io/badge/Analysis%20Layers-7-6366F1?style=for-the-badge" alt="Layers"/>
+  <img src="https://img.shields.io/badge/Languages-45+-FF6B6B?style=for-the-badge" alt="Languages"/>
+  <img src="https://img.shields.io/badge/Response-<100ms-f59e0b?style=for-the-badge" alt="Response"/>
 </p>
 
 <!-- Social Badges -->
 <p>
   <a href="#-quick-start"><img src="https://img.shields.io/badge/🚀_Quick_Start-Click_Here-6366F1?style=for-the-badge" alt="Quick Start"/></a>
-  <a href="#-live-demo"><img src="https://img.shields.io/badge/🎮_Try_Demo-Live-00C853?style=for-the-badge" alt="Demo"/></a>
+  <a href="#-7-layer-analysis-pipeline"><img src="https://img.shields.io/badge/🧠_7--Layer_Pipeline-Deep_Dive-00C853?style=for-the-badge" alt="Pipeline"/></a>
   <a href="#-api-reference"><img src="https://img.shields.io/badge/📚_API_Docs-Reference-FF6B6B?style=for-the-badge" alt="API Docs"/></a>
 </p>
 
 <br/>
 
-<!-- Animated Divider -->
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
 </div>
@@ -41,15 +39,17 @@
 <tr>
 <td width="60%">
 
-**Fake News Detector** is a cutting-edge machine learning application that leverages advanced NLP techniques to analyze and verify the authenticity of news articles in real-time.
+**FakeDetect AI** is not just a fake news classifier — it's an **Intelligent News Verification Platform** that runs a **7-layer deep analysis pipeline** to determine the authenticity of any news article in real-time.
 
-### ✨ Why Choose This?
+### ✨ What Makes It Different?
 
-- 🎯 **High Accuracy**: 98.6% accuracy trained on 20,800+ verified articles
-- ⚡ **Lightning Fast**: Results in under 100 milliseconds
-- 🔒 **Privacy First**: Your data is never stored
-- 🎨 **Beautiful UI**: Modern glassmorphism design with video background
-- 📊 **Confidence Scores**: Detailed metrics for every prediction
+- 🛡️ **7-Layer Pipeline**: Goes far beyond ML prediction with sentiment, manipulation, source, and writing analysis
+- 🚨 **Manipulation Scanner**: Detects fear-mongering, clickbait, conspiracy patterns, urgency tactics
+- 🔗 **URL Auto-Analysis**: Paste a URL — we scrape the article and analyze the domain's reputation
+- 🌍 **45+ Languages**: Auto-detects and translates before analysis
+- 🧠 **Explainable AI**: See exactly which words triggered the prediction
+- 📄 **Report Generation**: Download comprehensive analysis reports
+- ⚡ **Self-Evolving**: Fetches live RSS news and incorporates user feedback to retrain
 
 </td>
 <td width="40%">
@@ -62,165 +62,76 @@
 
 ---
 
-## 📋 Table of Contents
+## 🧠 7-Layer Analysis Pipeline
 
-<details open>
-<summary><b>🗂️ Click to expand/collapse</b></summary>
+> **This is the core innovation.** No other tool combines all 7 layers into a single weighted trust score.
 
-| Section | Description |
-|---------|-------------|
-| [🌟 Overview](#-overview) | Project introduction and highlights |
-| [🚀 Quick Start](#-quick-start) | Get up and running in minutes |
-| [💻 Installation](#-installation) | Detailed setup instructions |
-| [🎮 Live Demo](#-live-demo) | Try the application |
-| [🔧 How It Works](#-how-it-works) | Technical deep-dive |
-| [📚 API Reference](#-api-reference) | Complete API documentation |
-| [🎨 Features](#-features) | Feature showcase |
-| [📊 Model Performance](#-model-performance) | Accuracy metrics and benchmarks |
-| [🛠️ Tech Stack](#️-tech-stack) | Technologies used |
-| [🤝 Contributing](#-contributing) | Contribution guidelines |
- 
+```mermaid
+graph LR
+    A["🌍 Language<br>Detection"] --> B["🤖 ML<br>Classification"]
+    B --> C["💭 Sentiment<br>Analysis"]
+    C --> D["🚨 Manipulation<br>Detection"]
+    D --> E["🏛️ Source<br>Credibility"]
+    E --> F["✅ Fact<br>Verification"]
+    F --> G["🧠 Explainable<br>AI"]
+    G --> H["📊 Trust<br>Score"]
 
-</details>
+    style A fill:#6366F1,color:#fff
+    style B fill:#7c3aed,color:#fff
+    style C fill:#8B5CF6,color:#fff
+    style D fill:#ef4444,color:#fff
+    style E fill:#A855F7,color:#fff
+    style F fill:#22c55e,color:#fff
+    style G fill:#EC4899,color:#fff
+    style H fill:#f59e0b,color:#fff
+```
+
+<table>
+<tr>
+<th>Layer</th>
+<th>Feature</th>
+<th>What It Does</th>
+</tr>
+<tr><td>01</td><td><b>🌍 Language Detection</b></td><td>Auto-detects 45+ languages and translates to English for analysis</td></tr>
+<tr><td>02</td><td><b>🤖 ML Classification</b></td><td>TF-IDF + Logistic Regression trained on 20,800+ verified articles (98.6% accuracy)</td></tr>
+<tr><td>03</td><td><b>💭 Sentiment Analysis</b></td><td>Measures polarity (positive/negative), subjectivity (fact vs opinion), and emotional tone</td></tr>
+<tr><td>04</td><td><b>🚨 Manipulation Detection</b></td><td>Scans for 7 manipulation patterns: ALL CAPS, exclamation overuse, fear-mongering, urgency pressure, conspiracy language, clickbait, and us-vs-them framing</td></tr>
+<tr><td>05</td><td><b>🏛️ Source Credibility</b></td><td>Cross-references 40+ news outlets for trust scores and political bias ratings</td></tr>
+<tr><td>06</td><td><b>✅ Fact Verification</b></td><td>Queries Google Fact Check API against global fact-checkers (Snopes, PolitiFact, etc.)</td></tr>
+<tr><td>07</td><td><b>🧠 Explainable AI</b></td><td>Shows exact words that triggered the prediction with TF-IDF × coefficient impact scores</td></tr>
+</table>
+
+### 📊 Overall Trust Score
+
+All 7 layers combine into a **weighted composite trust score**:
+
+| Component | Weight | Description |
+|-----------|--------|-------------|
+| ML Prediction | 45% | Core model confidence |
+| Content Credibility | 20% | Sentiment + writing signals |
+| Manipulation Safety | 20% | Inverse of manipulation score |
+| Writing Quality | 15% | Professionalism metrics |
 
 ---
 
 ## 🚀 Quick Start
 
-<details open>
-<summary><b>⚡ Get started in 3 simple steps!</b></summary>
-
-<br/>
-
-### Step 1️⃣ Clone the Repository
-
 ```bash
-git clone https://github.com/yourusername/fake-news-detector.git
-cd fake-news-detector
-```
+# 1. Clone the repository
+git clone https://github.com/The-ChandanKV/Fake-news-prediction-ML-model.git
+cd Fake-news-prediction-ML-model
 
-### Step 2️⃣ Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### Step 3️⃣ Run the Application
-
-```bash
-python app.py
-```
-
-<br/>
-
-<div align="center">
-
-🎉 **That's it!** Open `http://localhost:5000` in your browser
-
-<img src="https://img.shields.io/badge/Status-Running-00C853?style=for-the-badge&logo=statuspal&logoColor=white" alt="Running"/>
-
-</div>
-
-</details>
-
----
-
-## 💻 Installation
-
-<details>
-<summary><b>📦 Detailed Installation Guide</b></summary>
-
-### Prerequisites
-
-| Requirement | Version | Check Command |
-|------------|---------|---------------|
-| Python | 3.8+ | `python --version` |
-| pip | Latest | `pip --version` |
-| Git | Any | `git --version` |
-
-### 🔧 Step-by-Step Setup
-
-<details>
-<summary><b>1. Clone Repository</b></summary>
-
-```bash
-# Using HTTPS
-git clone https://github.com/yourusername/fake-news-detector.git
-
-# Using SSH
-git clone git@github.com:yourusername/fake-news-detector.git
-
-# Navigate to project
-cd fake-news-detector
-```
-
-</details>
-
-<details>
-<summary><b>2. Create Virtual Environment (Recommended)</b></summary>
-
-```bash
-# Create virtual environment
-python -m venv venv
-
-# Activate on Windows
-venv\Scripts\activate
-
-# Activate on macOS/Linux
-source venv/bin/activate
-```
-
-</details>
-
-<details>
-<summary><b>3. Install Dependencies</b></summary>
-
-```bash
-# Install all required packages
+# 2. Install dependencies
 pip install -r requirements.txt
 
-# Download NLTK data
-python -c "import nltk; nltk.download('stopwords')"
-```
-
-</details>
-
-<details>
-<summary><b>4. Train the Model (First Time Only)</b></summary>
-
-```bash
-# Train the ML model
+# 3. Train the model (first time only, ~5 min)
 python train_improved_model.py
 
-# This will create:
-# - model/fake_news_model.pkl
-# - model/tfidf_vectorizer.pkl
-```
-
-⏱️ **Note**: Training takes approximately 5-10 minutes
-
-</details>
-
-<details>
-<summary><b>5. Run the Application</b></summary>
-
-```bash
+# 4. Run the application
 python app.py
 ```
 
-You should see:
-```
-============================================================
-FAKE NEWS DETECTION SYSTEM
-============================================================
-✓ Model Status: READY
-✓ Server starting on http://localhost:5000
-============================================================
-```
-
-</details>
-
-</details>
+🎉 Open `http://localhost:5000` in your browser!
 
 ---
 
@@ -228,7 +139,7 @@ FAKE NEWS DETECTION SYSTEM
 
 <div align="center">
 
-### 🔍 Try It Now!
+### 🔍 Fake News Detection
 
 <table>
 <tr>
@@ -236,33 +147,24 @@ FAKE NEWS DETECTION SYSTEM
 
 **Input** 📝
 
-Paste any news article into the analyzer
+```
+"BREAKING: Scientists discover
+that drinking coffee makes you
+immortal. Government covering
+it up for decades! WAKE UP!!!"
+```
 
 </td>
 <td align="center" width="50%">
 
-**Output** ✨
-
-Get instant verification with confidence score
-
-</td>
-</tr>
-<tr>
-<td>
-
-```
-"BREAKING: Scientists discover 
-that drinking coffee makes you 
-immortal. Government covering 
-it up for decades!"
-```
-
-</td>
-<td>
+**Output** 🛡️
 
 ```diff
 - ❌ FAKE NEWS
-- Confidence: 87.3%
+- ML Confidence: 92.1%
+- Trust Score: 30/100
+- Manipulation: Moderate (4 patterns)
+- Writing Quality: Average
 ```
 
 </td>
@@ -271,9 +173,9 @@ it up for decades!"
 <td>
 
 ```
-"The Federal Reserve announced 
-today that it will maintain 
-current interest rates, citing 
+"The Federal Reserve announced
+today that it will maintain
+current interest rates, citing
 stable economic indicators."
 ```
 
@@ -282,262 +184,81 @@ stable economic indicators."
 
 ```diff
 + ✅ REAL NEWS
-+ Confidence: 94.2%
++ ML Confidence: 94.2%
++ Trust Score: 82/100
++ Manipulation: Minimal
++ Writing Quality: Professional
 ```
 
 </td>
 </tr>
 </table>
+
+### 🔗 URL Analysis
+
+Paste any URL and the system automatically:
+1. Analyzes domain reputation
+2. Scrapes article content
+3. Runs full 7-layer pipeline
 
 </div>
 
 ---
 
-## 🔧 How It Works
-
-<details open>
-<summary><b>🧠 Technical Architecture</b></summary>
-
-```mermaid
-graph LR
-    A[📝 Input Text] --> B[🔄 Preprocessing]
-    B --> C[📊 TF-IDF Vectorization]
-    C --> D[🤖 ML Model]
-    D --> E[📈 Prediction]
-    E --> F[✅ Result + Confidence]
-    
-    style A fill:#6366F1,color:#fff
-    style B fill:#8B5CF6,color:#fff
-    style C fill:#A855F7,color:#fff
-    style D fill:#D946EF,color:#fff
-    style E fill:#EC4899,color:#fff
-    style F fill:#F43F5E,color:#fff
-```
-
-### 🔄 Processing Pipeline
-
-<table>
-<tr>
-<th>Step</th>
-<th>Process</th>
-<th>Description</th>
-</tr>
-<tr>
-<td>
-
-**1️⃣**
-
-</td>
-<td>
-
-**Text Preprocessing**
-
-</td>
-<td>
-
-- Remove non-alphabetic characters
-- Convert to lowercase
-- Tokenization
-
-</td>
-</tr>
-<tr>
-<td>
-
-**2️⃣**
-
-</td>
-<td>
-
-**Stopword Removal**
-
-</td>
-<td>
-
-- Remove common English words
-- Focus on meaningful content
-
-</td>
-</tr>
-<tr>
-<td>
-
-**3️⃣**
-
-</td>
-<td>
-
-**Stemming**
-
-</td>
-<td>
-
-- Porter Stemmer algorithm
-- Reduce words to root form
-
-</td>
-</tr>
-<tr>
-<td>
-
-**4️⃣**
-
-</td>
-<td>
-
-**TF-IDF Vectorization**
-
-</td>
-<td>
-
-- Convert text to numerical features
-- 17,128 feature dimensions
-
-</td>
-</tr>
-<tr>
-<td>
-
-**5️⃣**
-
-</td>
-<td>
-
-**ML Prediction**
-
-</td>
-<td>
-
-- Logistic Regression classifier
-- Probability-based confidence score
-
-</td>
-</tr>
-</table>
-
-</details>
-
----
-
 ## 📚 API Reference
-
-<details>
-<summary><b>🔌 REST API Endpoints</b></summary>
 
 ### Base URL
 ```
 http://localhost:5000
 ```
 
----
+### Endpoints
 
-### 🔮 Predict Endpoint
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/predict` | Full 7-layer analysis pipeline |
+| `POST` | `/api/analyze-url` | Dedicated URL analysis |
+| `POST` | `/api/feedback` | Submit prediction feedback |
+| `POST` | `/api/fetch-news` | Fetch latest news for retraining |
+| `POST` | `/api/report` | Generate analysis report |
+| `GET` | `/api/trending` | Real-time trending topics analysis |
+| `GET` | `/api/stats` | Platform statistics |
+| `GET` | `/api/fetch-status` | News fetching status |
+| `GET` | `/health` | Health check |
 
-<table>
-<tr>
-<td><b>Endpoint</b></td>
-<td><code>POST /api/predict</code></td>
-</tr>
-<tr>
-<td><b>Content-Type</b></td>
-<td><code>application/json</code></td>
-</tr>
-</table>
+### 🔮 Full Analysis (`POST /api/predict`)
 
-**Request Body:**
+**Request:**
 ```json
 {
-    "text": "Your news article text here..."
+    "text": "Your news article text or URL here..."
 }
 ```
-
-**Success Response (200):**
-```json
-{
-    "prediction": "Fake News",
-    "confidence": 87.35,
-    "label": 0
-}
-```
-
-**Error Response (400):**
-```json
-{
-    "error": "Please provide valid news article text (at least 10 characters)"
-}
-```
-
----
-
-### 🏥 Health Check
-
-<table>
-<tr>
-<td><b>Endpoint</b></td>
-<td><code>GET /health</code></td>
-</tr>
-</table>
 
 **Response:**
 ```json
 {
-    "status": "healthy",
-    "model_loaded": true
+    "prediction": "Fake News",
+    "confidence": 92.1,
+    "label": 1,
+    "overall_trust_score": 30.2,
+    "trust_components": {
+        "ml_prediction": 7.9,
+        "content_analysis": 36.6,
+        "manipulation_inverse": 50.3,
+        "writing_quality": 55
+    },
+    "language": { "detected": "en", "name": "English", "translated": false },
+    "content_analysis": {
+        "sentiment": { "polarity": 0.0, "subjectivity": 0.0, "label": "Neutral" },
+        "manipulation": { "score": 49.7, "verdict": "Moderate Manipulation", "findings": [...] },
+        "writing_quality": { "score": 55, "label": "Average", "metrics": {...} }
+    },
+    "explanation": { "top_words": [...], "fake_indicators": [...] },
+    "sources": [...],
+    "fact_checks": [...]
 }
 ```
-
----
-
-### 📝 Example Usage
-
-<details>
-<summary><b>🐍 Python</b></summary>
-
-```python
-import requests
-
-response = requests.post(
-    'http://localhost:5000/api/predict',
-    json={'text': 'Your news article here...'}
-)
-
-result = response.json()
-print(f"Prediction: {result['prediction']}")
-print(f"Confidence: {result['confidence']}%")
-```
-
-</details>
-
-<details>
-<summary><b>🌐 JavaScript</b></summary>
-
-```javascript
-fetch('http://localhost:5000/api/predict', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text: 'Your news article here...' })
-})
-.then(response => response.json())
-.then(data => {
-    console.log(`Prediction: ${data.prediction}`);
-    console.log(`Confidence: ${data.confidence}%`);
-});
-```
-
-</details>
-
-<details>
-<summary><b>🔥 cURL</b></summary>
-
-```bash
-curl -X POST http://localhost:5000/api/predict \
-  -H "Content-Type: application/json" \
-  -d '{"text": "Your news article here..."}'
-```
-
-</details>
-
-</details>
 
 ---
 
@@ -547,23 +268,27 @@ curl -X POST http://localhost:5000/api/predict \
 
 | Feature | Description | Status |
 |---------|-------------|--------|
-| 🎬 **Video Background** | Immersive news-themed video background | ✅ Live |
-| 🪟 **Glassmorphism UI** | Modern frosted glass design aesthetic | ✅ Live |
-| 🎭 **Scroll Animations** | Smooth reveal animations on scroll | ✅ Live |
-| ⚡ **AJAX Predictions** | No page reload, instant results | ✅ Live |
-| 📊 **Confidence Meters** | Animated confidence score visualization | ✅ Live |
-| 🌙 **Dark Theme** | Eye-friendly dark mode design | ✅ Live |
-| 📱 **Responsive Design** | Works on all device sizes | ✅ Live |
-| ✨ **Particle Effects** | Floating ambient particles | ✅ Live |
+| 🛡️ **7-Layer Pipeline** | Multi-dimensional analysis beyond ML | ✅ Live |
+| 🚨 **Manipulation Scanner** | 7 emotional manipulation pattern types | ✅ Live |
+| 🔗 **URL Auto-Analysis** | Paste URLs, auto-scrape & analyze | ✅ Live |
+| 💭 **Sentiment Analysis** | Polarity, subjectivity, emotional tone | ✅ Live |
+| ✍️ **Writing Quality** | Vocabulary richness, readability metrics | ✅ Live |
+| 🧠 **Explainable AI** | Word-level coefficient analysis | ✅ Live |
+| 🌍 **45+ Languages** | Auto-detect and translate | ✅ Live |
+| ✅ **Fact Verification** | Google Fact Check API integration | ✅ Live |
+| 🏛️ **Source Credibility** | 40+ outlet trust database | ✅ Live |
+| ⚡ **Self-Evolving Model** | RSS feeds + user feedback retraining | ✅ Live |
+| 📈 **Trending Dashboard** | Real-time headline analysis | ✅ Live |
+| 📄 **Report Generation** | Downloadable HTML analysis reports | ✅ Live |
+| 🎬 **Video Background** | Immersive news-themed video | ✅ Live |
+| 🪟 **Glassmorphism UI** | Modern frosted glass design | ✅ Live |
+| ✨ **Neural Network Viz** | Animated canvas neural network | ✅ Live |
 
 </div>
 
 ---
 
 ## 📊 Model Performance
-
-<details open>
-<summary><b>📈 Accuracy Metrics</b></summary>
 
 <div align="center">
 
@@ -582,43 +307,14 @@ curl -X POST http://localhost:5000/api/predict \
 
 </div>
 
-### 📋 Classification Report
-
-| Class | Precision | Recall | F1-Score | Support |
-|-------|-----------|--------|----------|---------|
-| Fake News | 0.98 | 0.97 | 0.97 | 2,080 |
-| Real News | 0.97 | 0.98 | 0.97 | 2,080 |
-| **Weighted Avg** | **0.98** | **0.98** | **0.98** | **4,160** |
-
-### 🎯 Training Details
-
-<table>
-<tr>
-<td>
-
 | Parameter | Value |
 |-----------|-------|
-| Algorithm | Logistic Regression |
-| Vectorizer | TF-IDF |
-| Features | 17,128 |
-| Training Samples | 16,640 |
-| Test Samples | 4,160 |
-
-</td>
-<td>
-
-| Metric | Value |
-|--------|-------|
-| Training Time | ~5 min |
+| Algorithm | Logistic Regression (GridSearchCV tuned) |
+| Vectorizer | TF-IDF (20,000 features, bigrams) |
+| Training Samples | 20,800+ |
+| Test Accuracy | 98.6% |
 | Inference Time | <100ms |
-| Model Size | 485 KB |
-| Dataset Size | 20,800 |
-
-</td>
-</tr>
-</table>
-
-</details>
+| Analysis Pipeline | 7 layers |
 
 ---
 
@@ -640,13 +336,14 @@ curl -X POST http://localhost:5000/api/predict \
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5"/>
 <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3"/>
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript"/>
+<img src="https://img.shields.io/badge/Canvas_API-818cf8?style=for-the-badge" alt="Canvas"/>
 </p>
 
-### Design
+### APIs & Data
 <p>
-<img src="https://img.shields.io/badge/Glassmorphism-6366F1?style=for-the-badge" alt="Glassmorphism"/>
-<img src="https://img.shields.io/badge/Responsive-00C853?style=for-the-badge" alt="Responsive"/>
-<img src="https://img.shields.io/badge/Dark_Mode-1a1a2e?style=for-the-badge" alt="Dark Mode"/>
+<img src="https://img.shields.io/badge/Google_Fact_Check_API-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Google"/>
+<img src="https://img.shields.io/badge/RSS_Feeds-f59e0b?style=for-the-badge" alt="RSS"/>
+<img src="https://img.shields.io/badge/Google_Translate-22c55e?style=for-the-badge" alt="Translate"/>
 </p>
 
 </div>
@@ -655,105 +352,58 @@ curl -X POST http://localhost:5000/api/predict \
 
 ## 📁 Project Structure
 
-<details>
-<summary><b>🗂️ Click to view file structure</b></summary>
-
 ```
-fake-news-detector/
+FakeDetect-AI/
 │
 ├── 📂 model/
-│   ├── 🤖 fake_news_model.pkl      # Trained ML model
-│   └── 📊 tfidf_vectorizer.pkl     # TF-IDF vectorizer
+│   ├── 🤖 fake_news_model.pkl           # Trained ML model
+│   └── 📊 tfidf_vectorizer.pkl          # TF-IDF vectorizer
 │
 ├── 📂 static/
-│   ├── 🎨 styles.css               # Main stylesheet (glassmorphism)
-│   ├── ⚡ script.js                # Interactive JavaScript
+│   ├── 🎨 styles.css                     # Glassmorphism + responsive CSS
+│   ├── ⚡ script.js                      # Neural net animation + analysis display
 │   └── 📂 video/
-│       └── 🎬 news_intro.mp4       # Background video
+│       └── 🎬 news_intro.mp4            # Background video
 │
 ├── 📂 templates/
-│   └── 🌐 index.html               # Main HTML template
+│   └── 🌐 index.html                    # Main HTML (7-layer UI)
 │
-├── 🐍 app.py                       # Flask application
-├── 🔬 train_improved_model.py      # Model training script
-├── 🧪 test_model.py                # Model testing script
-├── 📋 requirements.txt             # Python dependencies
-├── 📚 README.md                    # This file!
-└── 📊 train.csv                    # Training dataset
+├── 🐍 app.py                            # Flask app + 7-layer API pipeline
+├── 🧠 advanced_features.py              # Language, fact-check, source, explainability
+├── 💭 sentiment_analysis.py             # Sentiment + manipulation + writing quality
+├── 🔗 url_analysis.py                   # URL credibility + scraping
+├── 📰 fetch_news.py                     # Dynamic news fetcher (RSS/APIs)
+├── 🔬 train_improved_model.py           # Model training with GridSearchCV
+├── 🧪 test_model.py                     # Model testing script
+├── 📋 requirements.txt                  # Python dependencies
+├── 📚 README.md                         # This file!
+└── 📊 train.csv                         # Training dataset (20,800+)
 ```
-
-</details>
 
 ---
 
 ## 🤝 Contributing
 
-<details>
-<summary><b>💡 How to Contribute</b></summary>
-
-We love contributions! Here's how you can help:
-
-### 🐛 Bug Reports
-
-1. Check if the bug already exists in [Issues](../../issues)
-2. If not, create a new issue with:
-   - Clear title and description
-   - Steps to reproduce
-   - Expected vs actual behavior
-   - Screenshots if applicable
-
-### ✨ Feature Requests
-
-1. Check [Issues](../../issues) for similar requests
-2. Create a new issue with the `enhancement` label
-3. Describe the feature and its use case
-
-### 🔧 Pull Requests
+We love contributions! Check [Issues](../../issues) for bugs or feature requests.
 
 ```bash
-# 1. Fork the repository
-# 2. Clone your fork
-git clone https://github.com/yourusername/fake-news-detector.git
-
-# 3. Create a branch
+# Fork → Clone → Branch → Commit → Push → PR
 git checkout -b feature/amazing-feature
-
-# 4. Make your changes
-# 5. Commit
 git commit -m "Add amazing feature"
-
-# 6. Push
 git push origin feature/amazing-feature
-
-# 7. Open a Pull Request
 ```
 
-### 📜 Code of Conduct
-
-- Be respectful and inclusive
-- Provide constructive feedback
-- Help others learn and grow
-
-</details>
-
 ---
-
-
 
 ## 💖 Support
 
 <div align="center">
 
-If you found this project helpful, please consider:
-
-<a href="https://github.com/The-ChandanKV/fake-news-detector/stargazers">
+<a href="https://github.com/The-ChandanKV/Fake-news-prediction-ML-model/stargazers">
   <img src="https://img.shields.io/badge/⭐_Star_This_Repo-6366F1?style=for-the-badge" alt="Star"/>
 </a>
-<a href="https://github.com/The-ChandanKV/fake-news-detector/fork">
+<a href="https://github.com/The-ChandanKV/Fake-news-prediction-ML-model/fork">
   <img src="https://img.shields.io/badge/🍴_Fork_This_Repo-00C853?style=for-the-badge" alt="Fork"/>
-</a>
-<a href="https://github.com/The-ChandanKV/fake-news-detector/issues">
-  <img src="https://img.shields.io/badge/🐛_Report_Bug-FF6B6B?style=for-the-badge" alt="Bug"/>
 </a>
 
 </div>
@@ -797,24 +447,12 @@ If you found this project helpful, please consider:
 <a href="mailto:thechandankv@gmail.com">
   <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/>
 </a>
-</a>
-<a href="https://github.com/The-Chandan-KV">
-  <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
-</a>
 </p>
 
 ---
 
+**Presented at AIKYAM 2026 — National Level IPR Conclave, RVITM Bengaluru**
+
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=100&section=footer" width="100%"/>
-
-<p>
-Made with ❤️  by <b>Chandan K V</b>
-</p>
-
-<p>
-<img src="https://komarev.com/ghpvc/?username=fake-news-detector&label=Profile%20Views&color=6366F1&style=for-the-badge" alt="Profile Views"/>
-</p>
-
-**⭐ Don't forget to star this repo if you found it useful!**
 
 </div>

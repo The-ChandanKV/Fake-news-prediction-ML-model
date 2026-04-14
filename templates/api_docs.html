@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation — FakeDetect AI</title>
+    <meta name="description" content="Commercial REST API documentation for FakeDetect AI — integrate fake news detection into any application.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050816;
+            --surface: rgba(255,255,255,0.04);
+            --border: rgba(255,255,255,0.08);
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --purple: #818cf8;
+            --blue: #60a5fa;
+            --green: #4ade80;
+            --red: #ef4444;
+            --yellow: #facc15;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --code-bg: #0d1117;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+        /* Nav */
+        .api-nav {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1rem 2rem;
+            background: rgba(5,8,22,0.95);
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+        .api-nav .logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--purple); text-decoration:none; }
+        .api-nav .nav-links { display: flex; gap: 1.5rem; }
+        .api-nav .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+        .api-nav .nav-links a:hover { color: var(--text); }
+        .api-badge { background: var(--gradient); color: white; font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 10px; }
+
+        /* Layout */
+        .api-layout { display: grid; grid-template-columns: 260px 1fr; min-height: calc(100vh - 57px); }
+
+        /* Sidebar */
+        .api-sidebar {
+            background: rgba(255,255,255,0.02);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1rem;
+            position: sticky; top: 57px;
+            height: calc(100vh - 57px);
+            overflow-y: auto;
+        }
+        .sidebar-section { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin: 1.25rem 0 0.5rem 0.5rem; }
+        .sidebar-link { display: block; padding: 0.5rem 0.75rem; color: var(--muted); text-decoration: none; font-size: 0.875rem; border-radius: 6px; transition: all 0.2s; border-left: 2px solid transparent; }
+        .sidebar-link:hover { color: var(--text); background: var(--surface); }
+        .sidebar-link.post { border-left-color: var(--green); color: var(--green); }
+        .sidebar-link.get { border-left-color: var(--blue); color: var(--blue); }
+        .method-badge {
+            display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 0.7rem;
+            font-weight: 700; font-family: 'JetBrains Mono', monospace; margin-right: 6px;
+        }
+        .method-badge.post { background: rgba(74,222,128,0.15); color: var(--green); }
+        .method-badge.get { background: rgba(96,165,250,0.15); color: var(--blue); }
+
+        /* Main */
+        .api-main { padding: 3rem; max-width: 900px; }
+
+        /* Hero */
+        .api-hero {
+            background: linear-gradient(135deg, rgba(102,126,234,0.15), rgba(118,75,162,0.08));
+            border: 1px solid rgba(129,140,248,0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+        }
+        .api-hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .api-hero p { color: var(--muted); line-height: 1.7; max-width: 600px; }
+        .base-url {
+            margin-top: 1.5rem;
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--purple);
+            display: flex; align-items: center; gap: 1rem;
+        }
+        .base-url span { color: var(--muted); font-family: Inter; font-size: 0.8rem; }
+
+        /* Pillars */
+        .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 3rem; }
+        .pillar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; text-align: center; }
+        .pillar-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .pillar h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .pillar p { color: var(--muted); font-size: 0.8rem; line-height: 1.5; }
+
+        /* Endpoint card */
+        .endpoint {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .endpoint-header {
+            display: flex; align-items: center; gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            user-select: none;
+        }
+        .endpoint-header:hover { background: rgba(255,255,255,0.03); }
+        .endpoint-title { font-size: 1rem; font-weight: 600; }
+        .endpoint-path { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--muted); }
+        .endpoint-desc { color: var(--muted); font-size: 0.85rem; margin-left: auto; }
+        .endpoint-body { padding: 1.5rem; border-top: 1px solid var(--border); display: none; }
+        .endpoint-body.open { display: block; }
+
+        /* Param table */
+        .param-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.875rem; }
+        .param-table th { text-align: left; padding: 0.5rem 0.75rem; color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); }
+        .param-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.04); }
+        .param-table td:first-child { font-family: 'JetBrains Mono', monospace; color: var(--yellow); font-size: 0.8rem; }
+        .param-table td:nth-child(2) { color: var(--blue); font-size: 0.8rem; }
+        .param-table tr.required td:first-child::after { content: ' *'; color: var(--red); }
+
+        /* Code block */
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 10px;
+            padding: 1.25rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            line-height: 1.7;
+            overflow-x: auto;
+            position: relative;
+            margin: 0.75rem 0;
+        }
+        .code-block .copy-btn {
+            position: absolute; top: 0.75rem; right: 0.75rem;
+            background: rgba(255,255,255,0.08); border: none;
+            color: var(--muted); padding: 3px 10px; border-radius: 5px;
+            font-size: 0.75rem; cursor: pointer; transition: all 0.2s;
+        }
+        .code-block .copy-btn:hover { background: rgba(255,255,255,0.15); color: var(--text); }
+        .str { color: #a5d6ff; }
+        .key { color: #ff9d00; }
+        .num { color: #b5cea8; }
+        .bool { color: #569cd6; }
+        .cm { color: #6a9955; }
+        .url { color: #ce9178; }
+        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; margin: 2.5rem 0 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+        .response-tag { background: rgba(74,222,128,0.1); color: var(--green); font-size: 0.75rem; padding: 2px 8px; border-radius: 5px; font-family: 'JetBrains Mono'; }
+        p.desc { color: var(--muted); line-height: 1.7; font-size: 0.9rem; margin-bottom: 0.75rem; }
+    </style>
+</head>
+<body>
+
+<nav class="api-nav">
+    <a href="/" class="logo">🛡️ FakeDetect AI</a>
+    <div class="nav-links">
+        <a href="/">Analyzer</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/api-docs" style="color:var(--text);">API Docs</a>
+        <span class="api-badge">v3.0</span>
+    </div>
+</nav>
+
+<div class="api-layout">
+    <aside class="api-sidebar">
+        <div class="sidebar-section">Overview</div>
+        <a class="sidebar-link" href="#intro">Introduction</a>
+        <a class="sidebar-link" href="#auth">Authentication</a>
+        <a class="sidebar-link" href="#errors">Error Handling</a>
+
+        <div class="sidebar-section">Endpoints</div>
+        <a class="sidebar-link post" href="#predict"><span class="method-badge post">POST</span>/api/predict</a>
+        <a class="sidebar-link post" href="#heatmap"><span class="method-badge post">POST</span>/api/heatmap</a>
+        <a class="sidebar-link post" href="#ipr"><span class="method-badge post">POST</span>/api/ipr-check</a>
+        <a class="sidebar-link get" href="#trending"><span class="method-badge get">GET</span>/api/trending</a>
+        <a class="sidebar-link get" href="#stats"><span class="method-badge get">GET</span>/api/stats</a>
+        <a class="sidebar-link post" href="#feedback"><span class="method-badge post">POST</span>/api/feedback</a>
+        <a class="sidebar-link post" href="#share"><span class="method-badge post">POST</span>/api/share-card</a>
+        <a class="sidebar-link get" href="#health"><span class="method-badge get">GET</span>/health</a>
+
+        <div class="sidebar-section">Resources</div>
+        <a class="sidebar-link" href="/dashboard">📊 Dashboard</a>
+        <a class="sidebar-link" href="/">🔍 Try Live</a>
+    </aside>
+
+    <main class="api-main">
+
+        <!-- Hero -->
+        <div class="api-hero" id="intro">
+            <h1>FakeDetect AI — API Reference</h1>
+            <p>A production-grade REST API for real-time fake news detection, content authenticity analysis, IPR originality scoring, and multi-language fact verification. Integrate it into any media platform, browser extension, or content moderation system.</p>
+            <div class="base-url">
+                <span>BASE URL</span>
+                https://fakedetect-ai.up.railway.app
+            </div>
+        </div>
+
+        <!-- Pillars -->
+        <div class="pillars">
+            <div class="pillar">
+                <div class="pillar-icon">⚡</div>
+                <h4>High Performance</h4>
+                <p>Predictions return in under 300ms with full explainability data included</p>
+            </div>
+            <div class="pillar">
+                <div class="pillar-icon">🌍</div>
+                <h4>45+ Languages</h4>
+                <p>Auto-detect and translate non-English articles before classification</p>
+            </div>
+            <div class="pillar">
+                <div class="pillar-icon">🔓</div>
+                <h4>Open Integration</h4>
+                <p>Standard JSON REST API. No SDK required. Works from any stack.</p>
+            </div>
+        </div>
+
+        <!-- Auth -->
+        <div class="section-title" id="auth">🔑 Authentication</div>
+        <p class="desc">The current version is open-access for demonstration purposes. In production, pass your API key in the request header:</p>
+        <div class="code-block">
+<span class="cm">// Request Header</span>
+<span class="key">X-API-Key</span>: <span class="str">your_api_key_here</span>
+<span class="key">Content-Type</span>: <span class="str">application/json</span></div>
+
+        <!-- Errors -->
+        <div class="section-title" id="errors">⚠️ Error Handling</div>
+        <p class="desc">All API errors return a JSON body with an <code style="color:var(--yellow);font-family:JetBrains Mono">error</code> field and a standard HTTP status code.</p>
+        <table class="param-table">
+            <tr><th>Code</th><th>Meaning</th></tr>
+            <tr><td>200</td><td>Success</td></tr>
+            <tr><td>400</td><td>Bad Request — missing or invalid parameters</td></tr>
+            <tr><td>503</td><td>Model not loaded — run train_improved_model.py</td></tr>
+            <tr><td>500</td><td>Internal Server Error</td></tr>
+        </table>
+
+        <!-- PREDICT -->
+        <div class="section-title" id="predict">📡 Endpoints</div>
+
+        <div class="endpoint">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method-badge post">POST</span>
+                <span class="endpoint-title">Full Prediction Analysis</span>
+                <span class="endpoint-path">/api/predict</span>
+                <span class="endpoint-desc">Core endpoint ↓</span>
+            </div>
+            <div class="endpoint-body open">
+                <p class="desc">Analyzes a news article and returns a full prediction with confidence score, explainability heatmap, fact-check results, source credibility, language detection, and trust score.</p>
+                <strong style="font-size:0.85rem;">Request Body</strong>
+                <table class="param-table">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr class="required"><td>text</td><td>string</td><td>The news article text to analyze (min 10 chars)</td></tr>
+                </table>
+                <strong style="font-size:0.85rem;">Example Request</strong>
+                <div class="code-block">
+<button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span class="cm">// JavaScript fetch</span>
+<span class="bool">const</span> response = <span class="bool">await</span> fetch(<span class="str">'/api/predict'</span>, {
+    method: <span class="str">'POST'</span>,
+    headers: { <span class="str">'Content-Type'</span>: <span class="str">'application/json'</span> },
+    body: JSON.stringify({
+        <span class="key">text</span>: <span class="str">"Scientists have discovered a cure for all cancers using common household bleach..."</span>
+    })
+});
+<span class="bool">const</span> data = <span class="bool">await</span> response.json();</div>
+                <strong style="font-size:0.85rem;display:flex;align-items:center;gap:0.5rem;margin-top:1rem;">Response <span class="response-tag">200 OK</span></strong>
+                <div class="code-block">
+{
+    <span class="key">"prediction"</span>: <span class="str">"Fake News"</span>,
+    <span class="key">"confidence"</span>: <span class="num">94.7</span>,
+    <span class="key">"label"</span>: <span class="num">1</span>,
+    <span class="key">"overall_trust_score"</span>: <span class="num">12.3</span>,
+    <span class="key">"language"</span>: { <span class="key">"detected"</span>: <span class="str">"en"</span>, <span class="key">"name"</span>: <span class="str">"English"</span>, <span class="key">"translated"</span>: <span class="bool">false</span> },
+    <span class="key">"sources"</span>: [],
+    <span class="key">"fact_checks"</span>: [ { <span class="key">"claim"</span>: <span class="str">"..."</span>, <span class="key">"rating"</span>: <span class="str">"False"</span>, <span class="key">"publisher"</span>: <span class="str">"Snopes"</span>, <span class="key">"url"</span>: <span class="str">"..."</span> } ],
+    <span class="key">"explanation"</span>: {
+        <span class="key">"fake_indicators"</span>: [ { <span class="key">"word"</span>: <span class="str">"bleach"</span>, <span class="key">"impact"</span>: <span class="num">0.84</span> }, ... ],
+        <span class="key">"real_indicators"</span>: [ ... ]
+    },
+    <span class="key">"analyzed_at"</span>: <span class="str">"2026-04-16T09:30:00"</span>
+}</div>
+            </div>
+        </div>
+
+        <!-- HEATMAP -->
+        <div class="endpoint" id="heatmap">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method-badge post">POST</span>
+                <span class="endpoint-title">Word Importance Heatmap</span>
+                <span class="endpoint-path">/api/heatmap</span>
+                <span class="endpoint-desc">LIME-style ↓</span>
+            </div>
+            <div class="endpoint-body">
+                <p class="desc">Returns the article text annotated token-by-token with a score (−1.0 to +1.0). Positive scores indicate fake-leaning words (shown in red), negative scores indicate real-leaning words (shown in green). Use this to build an inline text heatmap UI.</p>
+                <div class="code-block">
+<button class="copy-btn" onclick="copyCode(this)">Copy</button>
+POST /api/heatmap
+{ <span class="key">"text"</span>: <span class="str">"Article text here..."</span> }
+
+<span class="cm">// Response</span>
+{
+    <span class="key">"success"</span>: <span class="bool">true</span>,
+    <span class="key">"annotated"</span>: [
+        { <span class="key">"token"</span>: <span class="str">"Scientists"</span>, <span class="key">"score"</span>: <span class="num">-0.12</span> },
+        { <span class="key">"token"</span>: <span class="str">"bleach"</span>,     <span class="key">"score"</span>: <span class="num">+0.67</span> },
+        ...
+    ]
+}</div>
+            </div>
+        </div>
+
+        <!-- IPR -->
+        <div class="endpoint" id="ipr">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method-badge post">POST</span>
+                <span class="endpoint-title">IPR Content Originality Check</span>
+                <span class="endpoint-path">/api/ipr-check</span>
+                <span class="endpoint-desc">Unique to FakeDetect ↓</span>
+            </div>
+            <div class="endpoint-body">
+                <p class="desc">Analyzes the content for Intellectual Property Rights (IPR) concerns — measures vocabulary diversity, detects copy-paste writing patterns, identifies sensationalized language, and returns an originality score (0–100).</p>
+                <table class="param-table">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr class="required"><td>text</td><td>string</td><td>Article text (min 30 chars)</td></tr>
+                    <tr><td>check_online</td><td>boolean</td><td>Also check key phrases against web (slower, default: false)</td></tr>
+                </table>
+                <div class="code-block">
+<button class="copy-btn" onclick="copyCode(this)">Copy</button>
+<span class="cm">// Response</span>
+{
+    <span class="key">"ipr"</span>: {
+        <span class="key">"originality_score"</span>: <span class="num">62</span>,
+        <span class="key">"ipr_risk"</span>: <span class="str">"Medium Risk — Some phrases may be sourced"</span>,
+        <span class="key">"ipr_color"</span>: <span class="str">"yellow"</span>,
+        <span class="key">"vocab_diversity"</span>: <span class="num">58.3</span>,
+        <span class="key">"key_phrases"</span>: [ <span class="str">"scientists discover cure"</span>, ... ],
+        <span class="key">"ipr_summary"</span>: {
+            <span class="key">"total_words"</span>: <span class="num">320</span>,
+            <span class="key">"unique_words"</span>: <span class="num">187</span>,
+            <span class="key">"pattern_flags"</span>: [ <span class="str">"Excessive capitalization detected"</span> ]
+        }
+    }
+}</div>
+            </div>
+        </div>
+
+        <!-- TRENDING -->
+        <div class="endpoint" id="trending">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method-badge get">GET</span>
+                <span class="endpoint-title">Real-Time Trending Topics</span>
+                <span class="endpoint-path">/api/trending</span>
+                <span class="endpoint-desc">Live dashboard ↓</span>
+            </div>
+            <div class="endpoint-body">
+                <p class="desc">Fetches current trending headlines from BBC and NYT via RSS, runs each through the fake news model, and returns them together with a fake probability and risk level. No parameters required.</p>
+                <div class="code-block">
+<button class="copy-btn" onclick="copyCode(this)">Copy</button>
+GET /api/trending
+
+<span class="cm">// Response</span>
+{
+    <span class="key">"success"</span>: <span class="bool">true</span>,
+    <span class="key">"topics"</span>: [
+        {
+            <span class="key">"title"</span>: <span class="str">"Global leaders meet at UN summit..."</span>,
+            <span class="key">"category"</span>: <span class="str">"World"</span>,
+            <span class="key">"source"</span>: <span class="str">"BBC"</span>,
+            <span class="key">"prediction"</span>: <span class="str">"Real"</span>,
+            <span class="key">"fake_probability"</span>: <span class="num">12.4</span>,
+            <span class="key">"risk_level"</span>: <span class="str">"Low"</span>,
+            <span class="key">"link"</span>: <span class="str">"https://..."</span>
+        }
+    ]
+}</div>
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="endpoint" id="stats">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method-badge get">GET</span>
+                <span class="endpoint-title">Platform Analytics Stats</span>
+                <span class="endpoint-path">/api/stats</span>
+                <span class="endpoint-desc">Dashboard data ↓</span>
+            </div>
+            <div class="endpoint-body">
+                <p class="desc">Returns aggregated statistics: total analyses, fake vs real split, 7-day trend, top flagged domains, language distribution, and feedback accuracy. Powers the Analytics Dashboard.</p>
+                <div class="code-block">
+GET /api/stats
+<span class="cm">// Returns full dashboard stat object (see dashboard.html)</span></div>
+            </div>
+        </div>
+
+        <!-- FEEDBACK -->
+        <div class="endpoint" id="feedback">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method-badge post">POST</span>
+                <span class="endpoint-title">Submit User Feedback</span>
+                <span class="endpoint-path">/api/feedback</span>
+                <span class="endpoint-desc">Continuous learning ↓</span>
+            </div>
+            <div class="endpoint-body">
+                <p class="desc">Submit whether a prediction was correct or incorrect. This feedback is stored and incorporated into the next model retraining cycle, enabling continuous improvement.</p>
+                <table class="param-table">
+                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    <tr class="required"><td>text</td><td>string</td><td>The original article text</td></tr>
+                    <tr class="required"><td>label</td><td>0 or 1</td><td>Predicted label (0=Real, 1=Fake)</td></tr>
+                    <tr class="required"><td>correct</td><td>boolean</td><td>Was the prediction correct?</td></tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- SHARE -->
+        <div class="endpoint" id="share">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method-badge post">POST</span>
+                <span class="endpoint-title">Generate Share Card</span>
+                <span class="endpoint-path">/api/share-card</span>
+                <span class="endpoint-desc">WhatsApp / Social ↓</span>
+            </div>
+            <div class="endpoint-body">
+                <p class="desc">Generates a formatted verification report as a shareable text string optimized for WhatsApp, Twitter, and other social platforms. Returns a pre-encoded WhatsApp deep-link URL.</p>
+                <div class="code-block">
+<button class="copy-btn" onclick="copyCode(this)">Copy</button>
+POST /api/share-card
+{
+    <span class="key">"prediction"</span>: <span class="str">"Fake News"</span>,
+    <span class="key">"confidence"</span>: <span class="num">94.7</span>,
+    <span class="key">"overall_trust_score"</span>: <span class="num">12</span>,
+    <span class="key">"language"</span>: { <span class="key">"name"</span>: <span class="str">"English"</span> },
+    <span class="key">"text_preview"</span>: <span class="str">"Scientists claim bleach cures cancer..."</span>
+}
+
+<span class="cm">// Response</span>
+{
+    <span class="key">"share_text"</span>: <span class="str">"🚨 *FakeDetect AI Verdict*\n━━━━━━━━━━━━━━\n..."</span>,
+    <span class="key">"whatsapp_url"</span>: <span class="str">"https://wa.me/?text=..."</span>
+}</div>
+            </div>
+        </div>
+
+        <!-- HEALTH -->
+        <div class="endpoint" id="health">
+            <div class="endpoint-header" onclick="toggle(this)">
+                <span class="method-badge get">GET</span>
+                <span class="endpoint-title">Health Check</span>
+                <span class="endpoint-path">/health</span>
+                <span class="endpoint-desc">Status ↓</span>
+            </div>
+            <div class="endpoint-body">
+                <p class="desc">Returns the platform health status, model load state, version number, and list of enabled features. Use this to verify the API is operational before making prediction requests.</p>
+                <div class="code-block">
+GET /health
+<span class="cm">// Response</span>
+{
+    <span class="key">"status"</span>: <span class="str">"healthy"</span>,
+    <span class="key">"model_loaded"</span>: <span class="bool">true</span>,
+    <span class="key">"version"</span>: <span class="str">"3.0.0"</span>,
+    <span class="key">"features"</span>: [ <span class="str">"multi_language"</span>, <span class="str">"fact_check"</span>, <span class="str">"ipr_check"</span>, <span class="str">"heatmap"</span>, <span class="str">"trending"</span> ]
+}</div>
+            </div>
+        </div>
+
+        <div style="border-top:1px solid var(--border);padding-top:2rem;margin-top:1rem;color:var(--muted);font-size:0.85rem;text-align:center;">
+            FakeDetect AI v3.0 — Built for AIKYAM 2026 · RVITM Bengaluru<br>
+            <a href="/" style="color:var(--purple);text-decoration:none;">← Back to Analyzer</a>
+        </div>
+    </main>
+</div>
+
+<script>
+function toggle(header) {
+    const body = header.nextElementSibling;
+    body.classList.toggle('open');
+}
+function copyCode(btn) {
+    const code = btn.parentElement.innerText.replace('Copy\n', '');
+    navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+    });
+}
+</script>
+</body>
+</html>

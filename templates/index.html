@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fake News Detector - AI Powered Truth Analyzer</title>
+    <title>FakeDetect AI — Fake News Detection Platform</title>
     <meta name="description"
-        content="Advanced AI-powered fake news detection system using machine learning to analyze and verify news articles">
+        content="Advanced AI-powered fake news detection platform with sentiment analysis, manipulation detection, URL verification and 45+ language support">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -41,16 +41,17 @@
                             stroke-linejoin="round" />
                     </svg>
                 </div>
-                <span class="logo-text">FakeDetect</span>
+                <span class="logo-text">FakeDetect<span style="color: #818cf8;">AI</span></span>
             </div>
             <div class="nav-links">
                 <a href="#hero" class="nav-link active">Home</a>
                 <a href="#prediction" class="nav-link">Analyze</a>
                 <a href="#howItWorks" class="nav-link">How It Works</a>
                 <a href="#features" class="nav-link">Features</a>
+                <a href="#liveUpdate" class="nav-link">Dashboard</a>
             </div>
             <div class="nav-cta">
-                <a href="#prediction" class="nav-btn">Try Now</a>
+                <a href="#prediction" class="nav-btn">🔍 Try Now</a>
             </div>
         </div>
     </nav>
@@ -59,20 +60,20 @@
     <section class="hero-section" id="hero">
         <div class="hero-content">
             <div class="hero-badge glass-badge" data-scroll="fade-down">
-                <span class="badge-icon">🤖</span>
-                <span class="badge-text">AI-Powered Detection</span>
+                <span class="badge-icon">🛡️</span>
+                <span class="badge-text">AI-Powered • Multi-Layer Verification</span>
             </div>
             <h1 class="main-title" data-scroll="fade-up">
-                <span class="title-line">Unmask the</span>
-                <span class="title-highlight">Truth</span>
+                <span class="title-line">Fake News</span>
+                <span class="title-line gradient-text">Detection</span>
             </h1>
             <p class="subtitle" data-scroll="fade-up" data-scroll-delay="100">
-                Advanced Machine Learning for News Verification
+                Beyond Prediction — Deep Content Intelligence
             </p>
             <p class="description" data-scroll="fade-up" data-scroll-delay="200">
-                Harness the power of artificial intelligence to instantly analyze and verify
-                the authenticity of news articles. Our cutting-edge ML model delivers
-                accurate predictions in milliseconds.
+                FakeDetect AI goes beyond simple classification. Our 7-layer analysis pipeline
+                combining ML prediction, sentiment analysis, manipulation detection, source credibility,
+                and fact-checking delivers the most comprehensive truth verification available.
             </p>
             <div class="hero-cta" data-scroll="fade-up" data-scroll-delay="300">
                 <a href="#prediction" class="cta-primary">
@@ -83,7 +84,7 @@
                     </svg>
                 </a>
                 <a href="#howItWorks" class="cta-secondary">
-                    <span>Learn More</span>
+                    <span>Our 7-Layer Pipeline</span>
                 </a>
             </div>
             <div class="stats-container" data-scroll="fade-up" data-scroll-delay="400">
@@ -91,19 +92,25 @@
                     <div class="stat-icon">🎯</div>
                     <span class="stat-number" data-target="98">0</span>
                     <span class="stat-suffix">%</span>
-                    <span class="stat-label">Accuracy</span>
+                    <span class="stat-label">ML Accuracy</span>
                 </div>
                 <div class="stat-card glass-card-small">
-                    <div class="stat-icon">📰</div>
-                    <span class="stat-number" data-target="20800">0</span>
+                    <div class="stat-icon">🧠</div>
+                    <span class="stat-number" data-target="7">0</span>
+                    <span class="stat-suffix"></span>
+                    <span class="stat-label">Analysis Layers</span>
+                </div>
+                <div class="stat-card glass-card-small">
+                    <div class="stat-icon">🌍</div>
+                    <span class="stat-number" data-target="45">0</span>
                     <span class="stat-suffix">+</span>
-                    <span class="stat-label">Articles Trained</span>
+                    <span class="stat-label">Languages</span>
                 </div>
                 <div class="stat-card glass-card-small">
                     <div class="stat-icon">⚡</div>
                     <span class="stat-number" data-target="100">0</span>
                     <span class="stat-suffix">ms</span>
-                    <span class="stat-label">Avg Response</span>
+                    <span class="stat-label">Response</span>
                 </div>
             </div>
         </div>
@@ -126,23 +133,25 @@
                 <div class="prediction-header">
                     <div class="section-badge">
                         <span class="badge-pulse"></span>
-                        <span>Live Detection</span>
+                        <span>Live Verification Engine</span>
                     </div>
                     <h2 class="section-title">
                         <span class="title-icon">🔍</span>
                         Analyze News Article
                     </h2>
                     <p class="section-subtitle">
-                        Paste any news article below and let our AI determine its authenticity
+                        Paste any news article, social media post, or URL — our 7-layer AI pipeline does the rest
                     </p>
                 </div>
 
                 <form id="predictionForm" class="prediction-form">
                     <div class="input-group">
                         <div class="textarea-container">
-                            <textarea name="news_text" id="news_text" placeholder="Paste your news article here... 
+                            <textarea name="news_text" id="news_text" placeholder="Paste a news article, social media post, or even a URL...
 
-Our advanced machine learning model will analyze the content and provide instant verification." required
+✦ Multi-language auto-detection (45+ languages)
+✦ URL auto-scraping — paste a link and we'll extract the article
+✦ Sentiment, manipulation & credibility analysis included" required
                                 rows="8"></textarea>
                             <div class="textarea-glow"></div>
                         </div>
@@ -151,14 +160,14 @@ Our advanced machine learning model will analyze the content and provide instant
                                 <span id="charCount">0</span> characters
                             </div>
                             <div class="input-tips">
-                                <span class="tip">💡 Tip: Longer articles provide more accurate results</span>
+                                <span class="tip">💡 Tip: You can paste a URL to auto-analyze any article on the web</span>
                             </div>
                         </div>
                     </div>
                     <button type="submit" class="predict-btn" id="submitBtn">
                         <span class="btn-bg"></span>
                         <span class="btn-content">
-                            <span class="btn-text">Analyze Article</span>
+                            <span class="btn-text">🛡️ Run Full Analysis</span>
                             <span class="btn-icon">
                                 <svg viewBox="0 0 24 24" fill="none">
                                     <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2"
@@ -174,20 +183,40 @@ Our advanced machine learning model will analyze the content and provide instant
                     </button>
                 </form>
 
+                <!-- Neural Network Animation Container (shown during analysis) -->
+                <div id="neuralNetContainer" style="display: none; padding: 2rem 0; text-align: center;">
+                    <canvas id="neuralNetCanvas" width="700" height="200"></canvas>
+                    <p style="color: #818cf8; font-size: 0.9rem; margin-top: 0.75rem;">
+                        Running 7-layer analysis pipeline...
+                    </p>
+                </div>
+
                 <!-- Result Container -->
                 <div class="result-container" id="resultContainer" style="display: none;">
                     <div class="result-card" id="resultCard">
+                        <!-- Overall Trust Score Ring -->
                         <div class="result-header">
-                            <div class="result-icon" id="resultIcon">
-                                <!-- Dynamic icon -->
+                            <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; justify-content: center;">
+                                <div style="position: relative; width: 120px; height: 120px;">
+                                    <canvas id="trustScoreCanvas" width="120" height="120"></canvas>
+                                    <div id="trustScoreText" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                                        <span style="font-family: 'Space Grotesk'; font-size: 1.8rem; font-weight: 800; color: #fff;">0</span>
+                                        <span style="display: block; font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Trust</span>
+                                    </div>
+                                </div>
+                                <div style="text-align: left;">
+                                    <div class="result-icon" id="resultIcon"></div>
+                                    <h3 class="result-title">Analysis Complete</h3>
+                                </div>
                             </div>
-                            <h3 class="result-title">Analysis Complete</h3>
                         </div>
                         <div class="result-body">
                             <p class="result-prediction" id="resultPrediction"></p>
+                            
+                            <!-- Confidence Bar -->
                             <div class="confidence-section">
                                 <div class="confidence-header">
-                                    <span class="confidence-label">Confidence Level</span>
+                                    <span class="confidence-label">ML Confidence Level</span>
                                     <span class="confidence-value" id="confidenceValue">0%</span>
                                 </div>
                                 <div class="confidence-bar">
@@ -197,16 +226,111 @@ Our advanced machine learning model will analyze the content and provide instant
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="result-details" id="resultDetails">
-                                <div class="detail-item">
+                                <!-- Base Detail -->
+                                <div class="detail-item" id="baseDetail">
                                     <span class="detail-icon">📊</span>
                                     <span class="detail-text" id="detailText"></span>
                                 </div>
+                                
+                                <!-- Language Notice -->
+                                <div class="detail-item" id="langDetail" style="display: none; background: rgba(59, 130, 246, 0.1); border-left: 3px solid #3b82f6;">
+                                    <span class="detail-icon">🌍</span>
+                                    <span class="detail-text" id="langText"></span>
+                                </div>
+
+                                <!-- Sentiment Analysis Card -->
+                                <div class="detail-item analysis-card" id="sentimentDetail" style="display: none; flex-direction: column; align-items: stretch; gap: 0.75rem; background: rgba(139, 92, 246, 0.08); border-left: 3px solid #8b5cf6; padding: 1rem 1.25rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <span class="detail-icon">💭</span>
+                                        <span class="detail-text"><strong>Sentiment & Tone Analysis</strong></span>
+                                    </div>
+                                    <div id="sentimentContent" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; padding-left: 0.25rem;"></div>
+                                </div>
+
+                                <!-- Manipulation Detection Card -->
+                                <div class="detail-item analysis-card" id="manipulationDetail" style="display: none; flex-direction: column; align-items: stretch; gap: 0.75rem; background: rgba(239, 68, 68, 0.08); border-left: 3px solid #ef4444; padding: 1rem 1.25rem;">
+                                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <span class="detail-icon">🚨</span>
+                                            <span class="detail-text"><strong>Manipulation Detection</strong></span>
+                                        </div>
+                                        <span id="manipulationBadge" style="font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; font-weight: 600;"></span>
+                                    </div>
+                                    <div id="manipulationContent" style="padding-left: 0.25rem;"></div>
+                                </div>
+
+                                <!-- Writing Quality Card -->
+                                <div class="detail-item analysis-card" id="writingDetail" style="display: none; flex-direction: column; align-items: stretch; gap: 0.75rem; background: rgba(34, 197, 94, 0.08); border-left: 3px solid #22c55e; padding: 1rem 1.25rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <span class="detail-icon">✍️</span>
+                                        <span class="detail-text"><strong>Writing Quality Analysis</strong></span>
+                                    </div>
+                                    <div id="writingContent" style="padding-left: 0.25rem;"></div>
+                                </div>
+
+                                <!-- URL Analysis Card -->
+                                <div class="detail-item analysis-card" id="urlDetail" style="display: none; flex-direction: column; align-items: stretch; gap: 0.75rem; background: rgba(59, 130, 246, 0.08); border-left: 3px solid #3b82f6; padding: 1rem 1.25rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <span class="detail-icon">🔗</span>
+                                        <span class="detail-text"><strong>URL & Source Analysis</strong></span>
+                                    </div>
+                                    <div id="urlContent" style="padding-left: 0.25rem;"></div>
+                                </div>
+
+                                <!-- Source Credibility -->
+                                <div class="detail-item" id="sourceDetail" style="display: none; background: rgba(168, 85, 247, 0.1); border-left: 3px solid #a855f7;">
+                                    <span class="detail-icon">🏛️</span>
+                                    <span class="detail-text" id="sourceText"></span>
+                                </div>
+
+                                <!-- LIME Heatmap (Inline Explanation) -->
+                                <div class="detail-item" id="heatmapDetail" style="display: none; flex-direction: column; align-items: stretch; gap: 0.75rem; background: rgba(255, 255, 255, 0.03); border-left: 3px solid #64748b; padding: 1rem 1.25rem;">
+                                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <span class="detail-icon">🔬</span>
+                                            <span class="detail-text"><strong>Model Perception Map</strong></span>
+                                        </div>
+                                    </div>
+                                    <div style="font-size: 0.8rem; color: #94a3b8; padding-left: 0.25rem;">How the AI reads this: <span style="color:#ef4444;">Red</span> implies Fake, <span style="color:#22c55e;">Green</span> implies Real.</div>
+                                    <div id="heatmapContent" style="padding: 1rem; background: #0b0f19; border-radius: 8px; font-size: 0.95rem; line-height: 1.7; color: #cbd5e1; max-height: 300px; overflow-y: auto;">
+                                    </div>
+                                </div>
+                                
+                                <!-- IPR Originality Check -->
+                                <div class="detail-item analysis-card" id="iprDetail" style="display: none; flex-direction: column; align-items: stretch; gap: 0.75rem; background: rgba(234, 179, 8, 0.08); border-left: 3px solid #eab308; padding: 1rem 1.25rem;">
+                                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                            <span class="detail-icon">🏅</span>
+                                            <span class="detail-text"><strong>IPR & Originality Check</strong></span>
+                                        </div>
+                                        <div id="iprScore" style="font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; color: #eab308;"></div>
+                                    </div>
+                                    <div id="iprText" style="padding-left: 0.25rem; font-size: 0.85rem; font-weight: 600; margin-bottom: -5px;"></div>
+                                    <div id="iprContent" style="padding-left: 0.25rem;"></div>
+                                </div>
+
+                                <!-- Fact Checks -->
+                                <div class="detail-item" id="factCheckDetail" style="display: none; flex-direction: column; align-items: flex-start; gap: 0.5rem; background: rgba(245, 158, 11, 0.1); border-left: 3px solid #f59e0b;">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <span class="detail-icon">✅</span>
+                                        <span class="detail-text"><strong>External Fact Checks</strong></span>
+                                    </div>
+                                    <div id="factCheckList" style="display: flex; flex-direction: column; gap: 0.5rem; padding-left: 1.5rem; width: 100%;">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Trust Components Breakdown -->
+                            <div id="trustBreakdown" style="display: none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08);">
+                                <h4 style="font-size: 0.9rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1rem; text-align: left;">Trust Score Components</h4>
+                                <div id="trustBars" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
                             </div>
                             
                             <!-- Feedback Section -->
                             <div class="feedback-section" id="feedbackSection" style="margin-top: 1.5rem; text-align: center; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
-                                <h4 style="font-size: 1rem; margin-bottom: 0.8rem; color: #cbd5e1;">Wait! Was this prediction correct?</h4>
+                                <h4 style="font-size: 1rem; margin-bottom: 0.8rem; color: #cbd5e1;">Was this analysis accurate?</h4>
                                 <div id="feedbackButtons" style="display: flex; gap: 15px; justify-content: center;">
                                     <button class="action-btn" onclick="submitFeedback(true)" style="background: rgba(34, 197, 94, 0.15); border-color: rgba(34, 197, 94, 0.3);">
                                         <span style="font-size: 1.2rem; margin-right: 5px;">👍</span> Yes, accurate!
@@ -216,11 +340,24 @@ Our advanced machine learning model will analyze the content and provide instant
                                     </button>
                                 </div>
                                 <div id="feedbackThanks" style="display: none; color: #4ade80; font-size: 0.95rem; font-weight: 500; padding: 10px;">
-                                    ✨ Thank you! The model will learn from your feedback during its next training cycle.
+                                    ✨ Thank you! Your feedback makes FakeDetect AI smarter.
+                                </div>
+                                
+                                <!-- Core actions -->
+                                <div style="display: flex; gap: 1rem; margin-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1.5rem;">
+                                    <button onclick="document.forms['predictionForm'].reset(); document.getElementById('resultContainer').style.display='none'; document.getElementById('predictionForm').scrollIntoView();" class="outline-btn" style="flex: 1;">
+                                        Analyze Another
+                                    </button>
+                                    <button id="shareReportBtn" onclick="shareReport()" class="outline-btn" style="flex: 1; border-color: #22c55e; color: #22c55e; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                                        🚀 Share to WhatsApp
+                                    </button>
                                 </div>
                             </div>
                         </div>
                         <div class="result-actions">
+                            <button class="action-btn secondary" onclick="generateReport()" style="margin-right: 10px;">
+                                <span>📄 Download Report</span>
+                            </button>
                             <button class="action-btn secondary" onclick="resetForm()">
                                 <svg viewBox="0 0 24 24" fill="none">
                                     <path d="M1 4V10H7M23 20V14H17" stroke="currentColor" stroke-width="2"
@@ -238,65 +375,62 @@ Our advanced machine learning model will analyze the content and provide instant
         </div>
     </section>
 
-    <!-- How It Works Section -->
+    <!-- How It Works Section — 7-Layer Pipeline -->
     <section class="how-it-works-section" id="howItWorks">
         <div class="container">
             <div class="section-header" data-scroll="fade-up">
                 <div class="section-badge">
-                    <span>Process</span>
+                    <span>7-Layer Pipeline</span>
                 </div>
                 <h2 class="section-title centered">How It Works</h2>
                 <p class="section-subtitle centered">
-                    Our three-step verification process ensures accurate and reliable results
+                    Our multi-layer verification pipeline analyzes content from 7 different angles
                 </p>
             </div>
             <div class="steps-timeline">
                 <div class="timeline-line"></div>
-                <div class="steps-container">
-                    <div class="step-card glass-card-medium" data-scroll="fade-right" data-scroll-delay="0">
-                        <div class="step-number-badge">01</div>
-                        <div class="step-icon-wrapper">
-                            <div class="step-icon-bg"></div>
-                            <div class="step-icon">📝</div>
-                        </div>
-                        <h3 class="step-title">Input Article</h3>
-                        <p class="step-description">
-                            Simply paste any news article, social media post, or text content you want to verify
-                        </p>
-                        <div class="step-features">
-                            <span class="feature-tag">Any Language</span>
-                            <span class="feature-tag">Any Source</span>
-                        </div>
+                <div class="pipeline-grid">
+                    <div class="pipeline-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="0">
+                        <div class="pipeline-number">01</div>
+                        <div class="pipeline-icon">🌍</div>
+                        <h3 class="pipeline-title">Language Detection</h3>
+                        <p class="pipeline-desc">Auto-detects 45+ languages and translates to English for analysis</p>
                     </div>
-                    <div class="step-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="150">
-                        <div class="step-number-badge">02</div>
-                        <div class="step-icon-wrapper">
-                            <div class="step-icon-bg"></div>
-                            <div class="step-icon">🤖</div>
-                        </div>
-                        <h3 class="step-title">AI Analysis</h3>
-                        <p class="step-description">
-                            Our ML model uses TF-IDF vectorization and advanced NLP to analyze content patterns
-                        </p>
-                        <div class="step-features">
-                            <span class="feature-tag">TF-IDF</span>
-                            <span class="feature-tag">NLP</span>
-                        </div>
+                    <div class="pipeline-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="50">
+                        <div class="pipeline-number">02</div>
+                        <div class="pipeline-icon">🤖</div>
+                        <h3 class="pipeline-title">ML Classification</h3>
+                        <p class="pipeline-desc">TF-IDF + Logistic Regression trained on 20,800+ verified articles</p>
                     </div>
-                    <div class="step-card glass-card-medium" data-scroll="fade-left" data-scroll-delay="300">
-                        <div class="step-number-badge">03</div>
-                        <div class="step-icon-wrapper">
-                            <div class="step-icon-bg"></div>
-                            <div class="step-icon">✨</div>
-                        </div>
-                        <h3 class="step-title">Get Results</h3>
-                        <p class="step-description">
-                            Receive instant verification with detailed confidence scores and analysis
-                        </p>
-                        <div class="step-features">
-                            <span class="feature-tag">Instant</span>
-                            <span class="feature-tag">Detailed</span>
-                        </div>
+                    <div class="pipeline-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="100">
+                        <div class="pipeline-number">03</div>
+                        <div class="pipeline-icon">💭</div>
+                        <h3 class="pipeline-title">Sentiment Analysis</h3>
+                        <p class="pipeline-desc">Measures polarity, subjectivity and emotional tone of the content</p>
+                    </div>
+                    <div class="pipeline-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="150">
+                        <div class="pipeline-number">04</div>
+                        <div class="pipeline-icon">🚨</div>
+                        <h3 class="pipeline-title">Manipulation Detection</h3>
+                        <p class="pipeline-desc">Detects fear-mongering, clickbait, conspiracy language & emotional tricks</p>
+                    </div>
+                    <div class="pipeline-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="200">
+                        <div class="pipeline-number">05</div>
+                        <div class="pipeline-icon">🏛️</div>
+                        <h3 class="pipeline-title">Source Credibility</h3>
+                        <p class="pipeline-desc">Cross-references 40+ news outlets for trust scores & political bias</p>
+                    </div>
+                    <div class="pipeline-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="250">
+                        <div class="pipeline-number">06</div>
+                        <div class="pipeline-icon">✅</div>
+                        <h3 class="pipeline-title">Fact Verification</h3>
+                        <p class="pipeline-desc">Queries Google Fact Check API against global fact-checkers</p>
+                    </div>
+                    <div class="pipeline-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="300">
+                        <div class="pipeline-number">07</div>
+                        <div class="pipeline-icon">🧠</div>
+                        <h3 class="pipeline-title">Explainable AI</h3>
+                        <p class="pipeline-desc">Shows exactly which words triggered the prediction with impact scores</p>
                     </div>
                 </div>
             </div>
@@ -310,63 +444,132 @@ Our advanced machine learning model will analyze the content and provide instant
                 <div class="section-badge">
                     <span>Capabilities</span>
                 </div>
-                <h2 class="section-title centered">Key Features</h2>
+                <h2 class="section-title centered">Why FakeDetect AI Wins</h2>
                 <p class="section-subtitle centered">
-                    Powered by state-of-the-art machine learning technology
+                    No other tool combines all these capabilities in a single platform
                 </p>
             </div>
             <div class="features-grid">
                 <div class="feature-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="0">
                     <div class="feature-icon-wrapper">
                         <div class="feature-icon-glow"></div>
-                        <div class="feature-icon">⚡</div>
+                        <div class="feature-icon">🔗</div>
                     </div>
-                    <h3 class="feature-title">Real-Time Analysis</h3>
+                    <h3 class="feature-title">URL Auto-Analysis</h3>
                     <p class="feature-description">
-                        Get instant verification results in under 100 milliseconds, powered by optimized ML algorithms
+                        Paste any URL — we automatically scrape the article, analyze the domain's reputation, and run our full 7-layer pipeline.
                     </p>
                     <div class="feature-stats">
-                        <span class="stat-mini">&lt;100ms response</span>
+                        <span class="stat-mini">Paste & Verify</span>
                     </div>
                 </div>
+
                 <div class="feature-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="100">
                     <div class="feature-icon-wrapper">
                         <div class="feature-icon-glow"></div>
-                        <div class="feature-icon">🎯</div>
+                        <div class="feature-icon">🚨</div>
                     </div>
-                    <h3 class="feature-title">High Accuracy</h3>
+                    <h3 class="feature-title">Manipulation Scanner</h3>
                     <p class="feature-description">
-                        98%+ accuracy rate achieved through training on over 20,800 verified articles
+                        Detects emotional manipulation patterns: fear-mongering, clickbait, conspiracy language, urgency pressure, and divisive framing.
                     </p>
                     <div class="feature-stats">
-                        <span class="stat-mini">98.6% accuracy</span>
+                        <span class="stat-mini">7 Pattern Types</span>
                     </div>
                 </div>
+
                 <div class="feature-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="200">
                     <div class="feature-icon-wrapper">
                         <div class="feature-icon-glow"></div>
-                        <div class="feature-icon">🔒</div>
+                        <div class="feature-icon">🧠</div>
                     </div>
-                    <h3 class="feature-title">Privacy First</h3>
+                    <h3 class="feature-title">Explainable AI</h3>
                     <p class="feature-description">
-                        Your data is processed securely and never stored. Complete privacy guaranteed
+                        Complete transparency — see exactly which words triggered the prediction with mathematical coefficient analysis.
                     </p>
                     <div class="feature-stats">
-                        <span class="stat-mini">Zero data storage</span>
+                        <span class="stat-mini">Deep Transparency</span>
                     </div>
                 </div>
+
                 <div class="feature-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="300">
                     <div class="feature-icon-wrapper">
                         <div class="feature-icon-glow"></div>
-                        <div class="feature-icon">📊</div>
+                        <div class="feature-icon">🌍</div>
                     </div>
-                    <h3 class="feature-title">Confidence Scores</h3>
+                    <h3 class="feature-title">Multi-Language AI</h3>
                     <p class="feature-description">
-                        Detailed confidence metrics and probability scores for each prediction made
+                        Auto-detects and translates 45+ languages before analysis. Verify news from anywhere in the world instantly.
                     </p>
                     <div class="feature-stats">
-                        <span class="stat-mini">Detailed metrics</span>
+                        <span class="stat-mini">45+ Languages</span>
                     </div>
+                </div>
+                
+                <div class="feature-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="400">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon-glow"></div>
+                        <div class="feature-icon">⚡</div>
+                    </div>
+                    <h3 class="feature-title">Self-Evolving Model</h3>
+                    <p class="feature-description">
+                        Autonomously fetches live RSS feeds and incorporates user feedback to retrain and improve continuously.
+                    </p>
+                    <div class="feature-stats">
+                        <span class="stat-mini">Dynamic Learning</span>
+                    </div>
+                </div>
+
+                <div class="feature-card glass-card-medium" data-scroll="fade-up" data-scroll-delay="500">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon-glow"></div>
+                        <div class="feature-icon">📄</div>
+                    </div>
+                    <h3 class="feature-title">Report Generation</h3>
+                    <p class="feature-description">
+                        Download comprehensive analysis reports as shareable documents with detailed breakdowns of every analysis layer.
+                    </p>
+                    <div class="feature-stats">
+                        <span class="stat-mini">Shareable Reports</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Impact Dashboard -->
+    <section class="impact-section" id="impact">
+        <div class="container">
+            <div class="section-header" data-scroll="fade-up">
+                <div class="section-badge">
+                    <span class="badge-pulse"></span>
+                    <span>Social Impact</span>
+                </div>
+                <h2 class="section-title centered">Fighting Misinformation</h2>
+                <p class="section-subtitle centered">
+                    Every analysis makes the internet a more truthful place
+                </p>
+            </div>
+            <div class="impact-grid" data-scroll="fade-up" data-scroll-delay="100">
+                <div class="impact-card glass-card-medium">
+                    <div class="impact-icon">🛡️</div>
+                    <div class="impact-number" id="globalAnalyses">0</div>
+                    <div class="impact-label">Articles Verified</div>
+                </div>
+                <div class="impact-card glass-card-medium">
+                    <div class="impact-icon">🚫</div>
+                    <div class="impact-number" id="globalFake">0</div>
+                    <div class="impact-label">Fake News Caught</div>
+                </div>
+                <div class="impact-card glass-card-medium">
+                    <div class="impact-icon">✅</div>
+                    <div class="impact-number" id="globalReal">0</div>
+                    <div class="impact-label">Real News Confirmed</div>
+                </div>
+                <div class="impact-card glass-card-medium">
+                    <div class="impact-icon">🌐</div>
+                    <div class="impact-number" id="globalLangs">0</div>
+                    <div class="impact-label">Languages Analyzed</div>
                 </div>
             </div>
         </div>
@@ -380,7 +583,7 @@ Our advanced machine learning model will analyze the content and provide instant
                     <span class="badge-pulse"></span>
                     <span>Dynamic Learning</span>
                 </div>
-                <h2 class="section-title centered">Live News Updates</h2>
+                <h2 class="section-title centered">Live News Dashboard</h2>
                 <p class="section-subtitle centered">
                     Keep the model sharp by feeding it real-world news. Your feedback + fresh articles = smarter AI.
                 </p>
@@ -446,9 +649,29 @@ Our advanced machine learning model will analyze the content and provide instant
                         </div>
                     </div>
                 </div>
+
+                <!-- Trending Topics Panel -->
+                <div class="trending-panel glass-card-large" data-scroll="fade-up" data-scroll-delay="300" style="margin-top: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <div>
+                            <h3 style="font-size: 1.3rem; margin-bottom: 0.25rem; color: #e2e8f0;">📈 Real-Time Trending Topics</h3>
+                            <p style="color: #94a3b8; font-size: 0.9rem;">Live analysis of current headlines across major news categories.</p>
+                        </div>
+                        <button class="action-btn secondary" onclick="loadTrendingTopics()" id="refreshTrendingBtn">
+                            <span>↻ Refresh</span>
+                        </button>
+                    </div>
+                    
+                    <div id="trendingTopicsContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: #64748b;">
+                            Loading trending topics...
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+
     <!-- Tech Stack Section -->
     <section class="tech-section" id="tech">
         <div class="container">
@@ -456,7 +679,7 @@ Our advanced machine learning model will analyze the content and provide instant
                 <div class="tech-content">
                     <h2 class="tech-title">Built with Modern Technology</h2>
                     <p class="tech-description">
-                        Our fake news detection system leverages cutting-edge machine learning frameworks
+                        A production-grade ML platform leveraging cutting-edge frameworks
                     </p>
                 </div>
                 <div class="tech-stack">
@@ -470,7 +693,7 @@ Our advanced machine learning model will analyze the content and provide instant
                     </div>
                     <div class="tech-item">
                         <div class="tech-icon">📊</div>
-                        <span class="tech-name">TF-IDF</span>
+                        <span class="tech-name">TF-IDF + NLP</span>
                     </div>
                     <div class="tech-item">
                         <div class="tech-icon">🌐</div>
@@ -479,6 +702,14 @@ Our advanced machine learning model will analyze the content and provide instant
                     <div class="tech-item">
                         <div class="tech-icon">📝</div>
                         <span class="tech-name">NLTK</span>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🔍</div>
+                        <span class="tech-name">Google API</span>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🌍</div>
+                        <span class="tech-name">Translator</span>
                     </div>
                 </div>
             </div>
@@ -498,23 +729,24 @@ Our advanced machine learning model will analyze the content and provide instant
                                 <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" />
                             </svg>
                         </div>
-                        <span>FakeDetect</span>
+                        <span>FakeDetect<span style="-webkit-text-fill-color: #818cf8;">AI</span></span>
                     </div>
-                    <p class="footer-tagline">Unmasking truth with AI</p>
+                    <p class="footer-tagline">Fake News Detection Platform</p>
                 </div>
                 <div class="footer-links">
                     <a href="#hero">Home</a>
                     <a href="#prediction">Analyze</a>
-                    <a href="#howItWorks">How It Works</a>
+                    <a href="#howItWorks">Pipeline</a>
                     <a href="#features">Features</a>
+                    <a href="#impact">Impact</a>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p class="footer-text">
-                    Built with Machine Learning & Python •
-                    <span class="footer-highlight">Powered by Logistic Regression</span>
+                    Built with Machine Learning, NLP & Python •
+                    <span class="footer-highlight">7-Layer Verification Pipeline</span>
                 </p>
-                <p class="footer-copyright">© 2025 Fake News Detector. All rights reserved.</p>
+                <p class="footer-copyright">© 2026 FakeDetect AI. Presented at AIKYAM 2026 — RVITM Bengaluru</p>
             </div>
         </div>
     </footer>
